@@ -1,7 +1,8 @@
 
 # Sistema de Inclusão de Protocolo
 
-![Logo do Projeto]() 
+<img width="1439" alt="photo" src="https://github.com/user-attachments/assets/50608cfd-1c7c-42d8-942d-5ec339862968">
+
 
 ## Descrição
 
