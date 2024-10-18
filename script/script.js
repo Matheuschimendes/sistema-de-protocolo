@@ -35,15 +35,6 @@ Porem identificamos que não existem informações o suficiente para seguir a an
 Pedimos que os senhores nos respondam com as seguintes informações, por gentileza.
 `,
 
-   /* cancelamentoChamado: `
-
-Prezados,
-
-Informo que essa solicitação está sendo tratada no chamado #24092024-32771 - INC0225576 - [High] LINK-DEDICADO-WIRELINK-CE-ESTACIO-IGUATU-186.225.38.219. 
-
-Por isso, o chamado que foi recentemente aberto {{PROTOCOLO}} será cancelado.
-`,*/
-
     emailProtocolo: `
 
 Prezados,
