@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inclusão de Protocolo</title>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Incluir Protocolo</h1>
+
+        <label for="protocolo">Número do Protocolo:</label>
+        <input type="text" id="protocolo" placeholder="Digite o número do protocolo">
+
+        <label for="texto">Selecione o Texto:</label>
+        <select id="texto">
+            <option value="">--Selecione--</option>
+            <option value="falhaEletrica">Falha Elétrica</option>
+            <option value="equipamentoOk">Equipamento Ok</option>
+            <option value="enviadoCampo">Enviado para Campo</option>
+            <option value="informacoesInsuficientes">Informações Insuficientes</option>
+            <option value="cancelamentoChamado">Chamado Cancelado</option>
+            <option value="emailProtocolo">E-mail com Protocolo</option>
+            <option value="falhaEletricaOperacional">Falha Elétrica mas Operacional</option>
+        </select>
+
+        <label for="textoGerado">Texto Gerado:</label>
+        <textarea id="textoGerado" readonly></textarea>
+
+        <button id="copiarTexto">Copiar Texto</button>
+
+        <div class="alert" id="alertMessage" style="display: none;">Texto copiado!</div>
+    </div>
+
+    <script src="/Sistema-de-protocolo/script/script.js"></script>
+</body>
+</html>
