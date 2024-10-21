@@ -155,16 +155,17 @@ btnGerarTexto.addEventListener('click', () => {
 
 // Função para copiar o texto gerado
 btnCopiarTexto.addEventListener('click', () => {
-    textareaTextoGerado.select();
-    document.execCommand('copy');
-    showAlert('Texto copiado!');
+    textareaTextoGerado.select(); // Seleciona o texto na área de texto
+    document.execCommand('copy'); // Executa o comando de copiar
+    showAlert('Texto copiado!'); // Chama a função para mostrar o alerta
 });
 
 // Função para mostrar alerta com mensagem personalizada
 function showAlert(message) {
-    alertMessage.innerHTML = message;
-    alertMessage.style.display = 'block'; 
+    alertMessage.innerHTML = message; // Define a mensagem do alerta
+    alertMessage.classList.add('show'); // Adiciona a classe para exibir o alerta
     setTimeout(() => {
-        alertMessage.style.display = 'none'; 
+        alertMessage.classList.remove('show'); // Remove a classe após 2 segundos
     }, 2000);
 }
+
