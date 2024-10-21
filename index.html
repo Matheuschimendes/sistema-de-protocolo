@@ -28,22 +28,18 @@
         <div id="cancelamentoDiv" style="display: none;"> <!-- será exibida apenas quando o usuário selecionar a opção "Chamado Cancelado"-->
             <label for="numeroChamado">Número do chamado a ser Cancelado:</label>
             <input type="text" id="numeroChamado" placeholder="Digite o número do chamado a ser cancelado">
-
-            <button id="atualizarTexto" style="margin-top: 10px; display: none;">Atualizar</button>
         </div>
+
+        <button id="gerarTexto" style="margin-top: 10px;">Gerar Texto</button> <!-- Botão para gerar texto -->
     
         <label for="textoGerado">Texto Gerado:</label>
         <textarea id="textoGerado" readonly></textarea>
     
         <button id="copiarTexto">Copiar Texto</button>
     
-        <div class="alert" id="alertMessage">Texto copiado!</div> <!-- Alerta no canto superior direito -->
+        <div class="alert" id="alertMessage">Texto copiado!</div> <!-- Alerta no canto inferior direito -->
     </div>
     
-    
-    
-
     <script src="/script/script.js"></script>
-    <script src="script/script.js"></script>
 </body>
 </html>

@@ -97,17 +97,18 @@ button:hover {
     box-shadow: 0 5px 15px rgba(0, 91, 179, 0.3);
 }
 
-/* .alert {
-    display: none;
-    text-align: center;
-    color: #28a745;
-    font-size: 14px;
-    margin-top: 15px;
-    padding: 10px;
-    border: 1px solid #28a745;
-    border-radius: 4px;
-    background-color: #e9f9ed;
-} */
+.alert {
+    display: none; /* Esconder por padrão */
+    position: fixed; /* Posicionamento fixo */
+    bottom: 20px; /* Distância do fundo */
+    right: 20px; /* Distância da direita */
+    background-color: #f44336; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    z-index: 1000; /* Certifique-se de que está acima de outros elementos */
+    transition: opacity 0.5s; /* Transição suave para opacidade */
+}
 
 
 .alert {
@@ -124,6 +125,32 @@ button:hover {
     transition: opacity 0.5s ease; /* Transição de opacidade */
     opacity: 0; /* Começa invisível */
     z-index: 1000; /* Fica acima de outros elementos */
+}
+
+
+/* Estilo do alerta */
+.alert {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #f44336; /* Vermelho */
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000; /* Certifique-se de que esteja acima de outros elementos */
+}
+
+.alert {
+    display: none; /* Esconder por padrão */
+    position: fixed; /* Posicionamento fixo */
+    bottom: 20px; /* Distância do fundo */
+    right: 20px; /* Distância da direita */
+    background-color: #f44336; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    z-index: 1000; /* Certifique-se de que está acima de outros elementos */
 }
 
 /* Classe para mostrar o alerta */
