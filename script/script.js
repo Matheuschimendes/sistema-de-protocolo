@@ -45,7 +45,7 @@ Verificamos que houve uma falha elétrica no local, porém o equipamento já se 
 Segue protocolo do chamado: {{PROTOCOLO}}`,
 
     cancelamentoChamado: `
-Prezados, bom dia!
+Prezados,
 
 Informo que essa solicitação está sendo tratada no chamado {{PROTOCOLO}}.
 
