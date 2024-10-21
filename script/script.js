@@ -7,7 +7,6 @@ Verificamos que o equipamento está com alarme de falha elétrica, poderia verif
 Segue protocolo do chamado: {{PROTOCOLO}}`,
 
     equipamentoOk: `
-
 Prezados, 
 
 Verificamos que o equipamento se encontra operacional, poderia validar por gentileza?
@@ -15,7 +14,6 @@ Verificamos que o equipamento se encontra operacional, poderia validar por genti
 Segue protocolo do chamado: {{PROTOCOLO}}`,
 
     enviadoCampo: `
-
 Prezados, 
 
 Seguimos a abertura de seu chamado no protocolo: {{PROTOCOLO}} 
@@ -25,7 +23,6 @@ Informamos que foi encontrada uma falha no equipamento, técnico em campo foi ac
 Qualquer dúvida estamos à disposição.`,
 
     informacoesInsuficientes: `
-
 Prezados, 
 
 Seguimos a abertura do seu chamado no protocolo:  {{PROTOCOLO}} 
@@ -35,14 +32,12 @@ Pedimos que os senhores nos respondam com as seguintes informações, por gentil
 `,
 
     emailProtocolo: `
-
 Prezados,
 
 Informo que foi gerado o protocolo:  {{PROTOCOLO}}, e que seu caso foi enviado para a equipe de analistas. Logo mais retornaremos com atualizações sobre o seu caso.
 `,
 
     falhaEletricaOperacional: `
-
 Prezados, 
 
 Verificamos que houve uma falha elétrica no local, porém o equipamento já se encontra operacional, poderia validar por gentileza?
@@ -65,12 +60,12 @@ const textareaTextoGerado = document.getElementById('textoGerado');
 const btnCopiarTexto = document.getElementById('copiarTexto');
 const alertMessage = document.getElementById('alertMessage');
 const cancelamentoDiv = document.getElementById('cancelamentoDiv');
-const numeroChamadoInput = document.getElementById('numeroChamado');
+const numeroChamadoInput = document.getElementById('numeroChamado'); // Correto aqui
 const btnAtualizarTexto = document.getElementById('atualizarTexto');
 
 // Evento para mostrar/esconder o campo "Número do Chamado" e o botão "Atualizar"
 selectTexto.addEventListener('change', () => {
-    const tipoTexto = selectTexto.value; //obtemos o valor atualmente selecionado no menu suspenso.
+    const tipoTexto = selectTexto.value;
 
     if (tipoTexto === 'cancelamentoChamado') {
         cancelamentoDiv.style.display = 'block';  // Mostra o campo para o número do chamado
@@ -80,8 +75,6 @@ selectTexto.addEventListener('change', () => {
         btnAtualizarTexto.style.display = 'none';  // Esconde o botão "Atualizar"
     }
 });
-
-selectTexto.addEventListener()
 
 // Função para atualizar o texto gerado
 btnAtualizarTexto.addEventListener('click', () => {
@@ -113,8 +106,8 @@ btnCopiarTexto.addEventListener('click', () => {
 
 // Função para mostrar alerta de "Texto copiado"
 function showAlert() {
-    alertMessage.classList.add('show'); // Adiciona a classe para exibir o alerta
+    alertMessage.style.display = 'block'; // Exibe o alerta
     setTimeout(() => {
-        alertMessage.classList.remove('show'); // Remove a classe após 2 segundos
+        alertMessage.style.display = 'none'; // Remove após 2 segundos
     }, 2000);
 }
