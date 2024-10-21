@@ -14,79 +14,146 @@ body {
     color: #333;
     background: url(/photo/image.png);
     background-repeat: no-repeat;
-    background-position:top;
+    background-position: top center;
     background-size: cover;
+    padding: 20px;
 }
 
 .container {
     background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    max-width: 400px;
+    padding: 40px 30px;
+    border-radius: 12px;
+    max-width: 450px;
     width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.container:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
-    font-size: 22px;
+    font-size: 24px;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     color: #111;
+    letter-spacing: 1px;
 }
 
 label {
     font-size: 14px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     display: block;
     color: #555;
+    font-weight: 500;
 }
 
 input,
 select,
 textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 12px;
+    margin-bottom: 20px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 14px;
-    background-color: #f9f9f9;
+    background-color: #fafafa;
     color: #333;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 input:focus,
 select:focus,
 textarea:focus {
     border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
     outline: none;
 }
 
 textarea {
     resize: none;
-    height: 150px;
+    height: 120px;
 }
 
 button {
     width: 100%;
-    padding: 12px;
+    padding: 12px 0;
     background-color: #007bff;
     border: none;
-    border-radius: 4px;
-    color: white;
+    border-radius: 6px;
+    color: #fff;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
+    box-shadow: 0 5px 15px rgba(0, 91, 179, 0.3);
 }
 
-.alert {
+/* .alert {
     display: none;
     text-align: center;
     color: #28a745;
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    background-color: #e9f9ed;
+} */
+
+
+.alert {
+    display: none; /* Iniciar oculto */
+    position: fixed; /* Fixar na tela */
+    top: 20px; /* Distância do topo */
+    right: 20px; /* Distância da direita */
+    color: #fff; /* Cor do texto */
+    font-size: 14px; /* Tamanho da fonte */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-radius: 6px; /* Bordas arredondadas */
+    background-color: rgba(40, 167, 69, 0.9); /* Cor de fundo verde com opacidade */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra leve */
+    transition: opacity 0.5s ease; /* Transição de opacidade */
+    opacity: 0; /* Começa invisível */
+    z-index: 1000; /* Fica acima de outros elementos */
+}
+
+/* Classe para mostrar o alerta */
+.alert.show {
+    display: block; /* Exibir o alerta */
+    opacity: 1; /* Tornar o alerta visível */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px 20px;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
 }

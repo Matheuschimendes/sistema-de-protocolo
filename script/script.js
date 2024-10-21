@@ -1,4 +1,3 @@
-
 const textos = {
     falhaEletrica: `
 Prezados,
@@ -48,42 +47,74 @@ Prezados,
 
 Verificamos que houve uma falha elétrica no local, porém o equipamento já se encontra operacional, poderia validar por gentileza?
 
-Segue protocolo do chamado: {{PROTOCOLO}}
+Segue protocolo do chamado: {{PROTOCOLO}}`,
+
+    cancelamentoChamado: `
+Prezados, bom dia!
+
+Informo que essa solicitação está sendo tratada no chamado {{PROTOCOLO}}.
+
+Por isso, o chamado que foi recentemente aberto {{CHAMADO}} será cancelado.
 `
 };
 
-//Cada uma dessas linhas está pegando um elemento HTML pelo seu id usando document.getElementById.
+// Pegando os elementos do DOM
 const inputProtocolo = document.getElementById('protocolo');
 const selectTexto = document.getElementById('texto');
 const textareaTextoGerado = document.getElementById('textoGerado');
 const btnCopiarTexto = document.getElementById('copiarTexto');
 const alertMessage = document.getElementById('alertMessage');
+const cancelamentoDiv = document.getElementById('cancelamentoDiv');
+const numeroChamadoInput = document.getElementById('numeroChamado');
+const btnAtualizarTexto = document.getElementById('atualizarTexto');
 
-
-//Evento change: Um evento change é adicionado ao dropdown selectTexto. 
-//Isso significa que toda vez que o usuário selecionar um novo tipo de mensagem, o código dentro dessa função será executado.
-
+// Evento para mostrar/esconder o campo "Número do Chamado" e o botão "Atualizar"
 selectTexto.addEventListener('change', () => {
+    const tipoTexto = selectTexto.value; //obtemos o valor atualmente selecionado no menu suspenso.
 
-    const protocolo = inputProtocolo.value; //pega o valor do protocolo digitado
-    const tipoTexto = selectTexto.value;   //Pega o valor selecionado no dropdown
-
-    if (tipoTexto && textos[tipoTexto]) {
-        textareaTextoGerado.value = textos[tipoTexto].replace('{{PROTOCOLO}}',  protocolo);
+    if (tipoTexto === 'cancelamentoChamado') {
+        cancelamentoDiv.style.display = 'block';  // Mostra o campo para o número do chamado
+        btnAtualizarTexto.style.display = 'block';  // Mostra o botão "Atualizar"
     } else {
-        textareaTextoGerado.value = '';
+        cancelamentoDiv.style.display = 'none';  // Esconde o campo se não for "Chamado Cancelado"
+        btnAtualizarTexto.style.display = 'none';  // Esconde o botão "Atualizar"
     }
 });
 
-btnCopiarTexto.addEventListener('click', () => { //Esse evento é adicionado ao botão btnCopiarTexto
+selectTexto.addEventListener()
+
+// Função para atualizar o texto gerado
+btnAtualizarTexto.addEventListener('click', () => {
+    const tipoTexto = selectTexto.value;
+    const numeroChamado = numeroChamadoInput.value;
+
+    if (tipoTexto === 'cancelamentoChamado' && numeroChamado) {
+        const protocolo = inputProtocolo.value;
+        const texto = textos.cancelamentoChamado
+            .replace('{{CHAMADO}}', numeroChamado)
+            .replace('{{PROTOCOLO}}', protocolo);
+        
+        textareaTextoGerado.value = texto;
+    } else {
+        alertMessage.innerText = 'Por favor, preencha todos os campos necessários.';
+        alertMessage.style.display = 'block';
+        setTimeout(() => {
+            alertMessage.style.display = 'none';
+        }, 2000);
+    }
+});
+
+// Função para copiar o texto gerado
+btnCopiarTexto.addEventListener('click', () => {
     textareaTextoGerado.select();
     document.execCommand('copy');
     showAlert();
 });
 
+// Função para mostrar alerta de "Texto copiado"
 function showAlert() {
-    alertMessage.style.display = 'block';
+    alertMessage.classList.add('show'); // Adiciona a classe para exibir o alerta
     setTimeout(() => {
-        alertMessage.style.display = 'none';
+        alertMessage.classList.remove('show'); // Remove a classe após 2 segundos
     }, 2000);
 }

@@ -9,10 +9,10 @@
 <body>
     <div class="container">
         <h1>Incluir Protocolo</h1>
-
+    
         <label for="protocolo">Número do Protocolo:</label>
         <input type="text" id="protocolo" placeholder="Digite o número do protocolo">
-
+    
         <label for="texto">Selecione o Texto:</label>
         <select id="texto">
             <option value="">--Selecione--</option>
@@ -24,14 +24,24 @@
             <option value="emailProtocolo">E-mail com Protocolo</option>
             <option value="falhaEletricaOperacional">Falha Elétrica mas Operacional</option>
         </select>
+    
+        <div id="cancelamentoDiv" style="display: none;"> <!-- será exibida apenas quando o usuário selecionar a opção "Chamado Cancelado"-->
+            <label for="numeroChamado">Número do chamado a ser Cancelado:</label>
+            <input type="text" id="numeroChamdo" placeholder="Digite o número do chamado a ser cancelado">
 
+            <button id="atualizarTexto" style="margin-top: 10px; display: none;">Atualizar</button>
+        </div>
+    
         <label for="textoGerado">Texto Gerado:</label>
         <textarea id="textoGerado" readonly></textarea>
-
+    
         <button id="copiarTexto">Copiar Texto</button>
-
-        <div class="alert" id="alertMessage" style="display: none;">Texto copiado!</div>
+    
+        <div class="alert" id="alertMessage">Texto copiado!</div> <!-- Alerta no canto superior direito -->
     </div>
+    
+    
+    
 
     <script src="/script/script.js"></script>
     <script src="script/script.js"></script>
