@@ -9,12 +9,19 @@
 <body>
     <div class="container">
         <h1>Incluir Protocolo</h1>
-    
+
         <label for="protocolo">Número do Protocolo:</label>
         <input type="text" id="protocolo" placeholder="Digite o número do protocolo">
-    
+
+        <label for="tipoMensagem">Tipo de Mensagem:</label>
+        <select id="tipoMensagem">
+            <option value="">--Selecione--</option>
+            <option value="texto">Texto</option>
+            <option value="carimbo">Carimbo</option>
+        </select>
+
         <label for="texto">Selecione o Texto:</label>
-        <select id="texto">
+        <select id="texto" style="display:none;">
             <option value="">--Selecione--</option>
             <option value="falhaEletrica">Falha Elétrica</option>
             <option value="equipamentoOk">Equipamento Ok</option>
@@ -24,22 +31,82 @@
             <option value="emailProtocolo">E-mail com Protocolo</option>
             <option value="falhaEletricaOperacional">Falha Elétrica mas Operacional</option>
         </select>
-    
-        <div id="cancelamentoDiv" style="display: none;"> <!-- será exibida apenas quando o usuário selecionar a opção "Chamado Cancelado"-->
+
+        <div id="cancelamentoDiv" style="display: none;">
             <label for="numeroChamado">Número do chamado a ser Cancelado:</label>
             <input type="text" id="numeroChamado" placeholder="Digite o número do chamado a ser cancelado">
         </div>
 
-        <button id="gerarTexto" style="margin-top: 10px;">Gerar Texto</button> <!-- Botão para gerar texto -->
-    
+        <button id="gerarTexto" style="margin-top: 10px;">Gerar Texto</button>
         <label for="textoGerado">Texto Gerado:</label>
         <textarea id="textoGerado" readonly></textarea>
-    
         <button id="copiarTexto">Copiar Texto</button>
-    
-        <div class="alert" id="alertMessage">Texto copiado!</div> <!-- Alerta no canto inferior direito -->
+        <div class="alert" id="alertMessage" style="display:none;">Texto copiado!</div>
     </div>
-    
+
+    <!-- Modal para Seleção de Carimbos -->
+    <div id="carimboModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Selecione um Carimbo</h2>
+            <select id="selectCarimbo">
+                <option value="">--Selecione--</option>
+                <option value="whatsappNocMassiva">WhatsApp - NOC MASSIVA</option>
+                <option value="transferenciaCmoReparo">Transferência - CMO REPARO</option>
+                <option value="transferenciaCaParceiro">Transferência - CA - PARCEIRO</option>
+            </select>
+            <div id="carimboInputsDiv" style="display:none;">
+                <div id="whatsappNocMassivaInputs" style="display:none;">
+                    <label for="unidade">UNIDADE:</label>
+                    <input type="text" id="unidade" placeholder="Digite a unidade">
+                    <label for="olt">OLT:</label>
+                    <input type="text" id="olt" placeholder="Digite a OLT">
+                    <label for="slot">SLOT:</label>
+                    <input type="text" id="slot" placeholder="Digite o SLOT">
+                    <label for="pon">PON:</label>
+                    <input type="text" id="pon" placeholder="Digite o PON">
+                    <label for="serialONU">Serial da ONU:</label>
+                    <input type="text" id="serialONU" placeholder="Digite o serial da ONU">
+                    <label for="contrato">Contrato:</label>
+                    <input type="text" id="contrato" placeholder="Digite o contrato">
+                </div>
+
+                <div id="transferenciaCmoReparoInputs" style="display:none;">
+                    <label for="analise">Análise:</label>
+                    <input type="text" id="analise" placeholder="Digite a análise">
+                    <label for="orientacoes">Orientações:</label>
+                    <input type="text" id="orientacoes" placeholder="Digite as orientações">
+                    <label for="enderecoCmoReparo">Endereço:</label>
+                    <input type="text" id="enderecoCmoReparo" placeholder="Digite o endereço">
+                    <label for="horarioFuncionamento">Horário de Funcionamento:</label>
+                    <input type="text" id="horarioFuncionamento" placeholder="Digite o horário de funcionamento">
+                    <label for="telefoneCmoReparo">Telefone:</label>
+                    <input type="text" id="telefoneCmoReparo" placeholder="Digite o telefone">
+                    <label for="emailCmoReparo">E-mail:</label>
+                    <input type="text" id="emailCmoReparo" placeholder="Digite o e-mail">
+                </div>
+
+                <div id="transferenciaCaParceiroInputs" style="display:none;">
+                    <label for="analiseParceiro">Análise:</label>
+                    <input type="text" id="analiseParceiro" placeholder="Digite a análise">
+                    <label for="parceiro">Parceiro:</label>
+                    <input type="text" id="parceiro" placeholder="Digite o parceiro">
+                    <label for="orientacaoParceiro">Orientação:</label>
+                    <input type="text" id="orientacaoParceiro" placeholder="Digite a orientação">
+                    <label for="enderecoParceiro">Endereço:</label>
+                    <input type="text" id="enderecoParceiro" placeholder="Digite o endereço">
+                    <label for="horarioFuncionamentoParceiro">Horário de Funcionamento:</label>
+                    <input type="text" id="horarioFuncionamentoParceiro" placeholder="Digite o horário de funcionamento">
+                    <label for="telefoneParceiro">Telefone:</label>
+                    <input type="text" id="telefoneParceiro" placeholder="Digite o telefone">
+                    <label for="emailParceiro">E-mail:</label>
+                    <input type="text" id="emailParceiro" placeholder="Digite o e-mail">
+                </div>
+            </div>
+            <button id="confirmarCarimbo" style="margin-top: 10px;">Confirmar</button>
+        </div>
+    </div>
+
     <script src="/script/script.js"></script>
 </body>
 </html>

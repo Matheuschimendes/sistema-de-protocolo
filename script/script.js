@@ -1,171 +1,165 @@
+
 // Declaração do objeto textos
 const textos = {
     falhaEletrica: `
-    Prezados,
+            Prezados,
 
-    Verificamos que o equipamento está com alarme de falha elétrica, poderia verificar e validar essa informação por gentileza?
+            Informamos que o equipamento está com alarme de falha elétrica.
 
-    Segue protocolo do chamado: {{PROTOCOLO}}`,
-
+            Segue protocolo do atendimento.
+            `,
     equipamentoOk: `
-    Prezados, 
+            Prezados,
 
-    Verificamos que o equipamento se encontra operacional, poderia validar por gentileza?
+            Informamos que o equipamento está OK e operacional. O atendimento foi finalizado.
 
-    Segue protocolo do chamado: {{PROTOCOLO}}`,
-
+            Segue protocolo do atendimento.
+            `,
     enviadoCampo: `
-    Prezados, 
+            Prezados,
 
-    Seguimos a abertura de seu chamado no protocolo: {{PROTOCOLO}} 
+            O chamado foi enviado para campo para verificação.
 
-    Informamos que foi encontrada uma falha no equipamento, técnico em campo foi acionado e enviado até o local realizando reconfiguração do equipamento e restabelecendo a conexão.
-
-    Qualquer dúvida estamos à disposição.`,
-
+            Segue protocolo do atendimento.
+            `,
     informacoesInsuficientes: `
-    Prezados, 
+            Prezados,
 
-    Seguimos a abertura do seu chamado no protocolo: {{PROTOCOLO}} 
+            Infelizmente não conseguimos seguir com a solicitação, pois as informações estão insuficientes. Favor, nos encaminhar as informações necessárias para que possamos atender.
 
-    Porém identificamos que não existem informações o suficiente para seguir a análise de seu chamado. 
-    Pedimos que os senhores nos respondam com as seguintes informações, por gentileza.
-    `,
-
-    emailProtocolo: `
-    Prezados,
-
-    Informo que foi gerado o protocolo: {{PROTOCOLO}}, e que seu caso foi enviado para a equipe de analistas. Logo mais retornaremos com atualizações sobre o seu caso.
-    `,
-
-    falhaEletricaOperacional: `
-    Prezados, 
-
-    Verificamos que houve uma falha elétrica no local, porém o equipamento já se encontra operacional, poderia validar por gentileza?
-
-    Segue protocolo do chamado: {{PROTOCOLO}}`,
-
+            Segue protocolo do atendimento.
+            `,
     cancelamentoChamado: `
-    Prezados,
+            Prezados,
 
-    Informo que essa solicitação está sendo tratada no chamado {{PROTOCOLO}}.
+            O chamado foi cancelado conforme solicitado.
 
-    Por isso, o chamado que foi recentemente aberto {{CHAMADO}} será cancelado.
-    `
+            Segue protocolo do atendimento.
+            `,
+    emailProtocolo: `
+            Prezados,
+
+            O protocolo foi enviado para o e-mail solicitado.
+
+            Segue protocolo do atendimento.
+            `,
+    falhaEletricaOperacional: `
+            Prezados,
+
+            O equipamento está com alarme de falha elétrica, porém ainda se encontra operacional.
+
+            Segue protocolo do atendimento.
+            `
 };
 
-// Pegando os elementos do DOM
-const inputProtocolo = document.getElementById('protocolo');
-const selectTexto = document.getElementById('texto');
-const textareaTextoGerado = document.getElementById('textoGerado');
-const btnCopiarTexto = document.getElementById('copiarTexto');
-const alertMessage = document.getElementById('alertMessage');
-const cancelamentoDiv = document.getElementById('cancelamentoDiv');
-const numeroChamadoInput = document.getElementById('numeroChamado'); 
-const btnGerarTexto = document.getElementById('gerarTexto'); // Novo botão para gerar texto
+// Exibir ou ocultar o campo texto baseado no tipo de mensagem
+const tipoMensagem = document.getElementById("tipoMensagem");
+const textoSelect = document.getElementById("texto");
+const cancelamentoDiv = document.getElementById("cancelamentoDiv");
+const gerarTextoButton = document.getElementById("gerarTexto");
+const textoGerado = document.getElementById("textoGerado");
 
-// Inicializa o botão de gerar texto como oculto
-btnGerarTexto.style.display = 'none';
-
-// Função para validar o formato do protocolo
-function validarProtocolo(protocolo) {
-    const regex = /^\d{8}-\d{5}$/; // Formato: DDMMAAAA-XXXXX
-    return regex.test(protocolo);
-}
-
-// Função para validar o número do chamado
-function validarNumeroChamado(chamado) {
-    const regex = /^\d{8}-\d{5}$/; // Formato: DDMMAAAA-XXXXX
-    return regex.test(chamado);
-}
-
-// Função para verificar se os campos estão preenchidos corretamente
-function verificarCampos() {
-    const protocolo = inputProtocolo.value;
-    const tipoTexto = selectTexto.value;
-
-    if (validarProtocolo(protocolo) && tipoTexto) {
-        btnGerarTexto.style.display = 'block'; // Mostra o botão se os campos estiverem corretos
+tipoMensagem.addEventListener("change", function () {
+    if (this.value === "texto") {
+        textoSelect.style.display = "block";
+        cancelamentoDiv.style.display = "none";
+    } else if (this.value === "carimbo") {
+        textoSelect.style.display = "none";
+        cancelamentoDiv.style.display = "none";
+        openCarimboModal(); // Abre o modal ao selecionar carimbo
     } else {
-        btnGerarTexto.style.display = 'none'; // Esconde o botão caso contrário
-    }
-}
-
-// Adiciona eventos de input e change para monitorar alterações nos campos
-inputProtocolo.addEventListener('input', verificarCampos);
-selectTexto.addEventListener('change', verificarCampos);
-
-// Adiciona o evento para mostrar/esconder o campo "Número do Chamado"
-selectTexto.addEventListener('change', () => {
-    const tipoTexto = selectTexto.value;
-
-    if (tipoTexto === 'cancelamentoChamado') {
-        cancelamentoDiv.style.display = 'block';  
-    } else {
-        cancelamentoDiv.style.display = 'none';  
+        textoSelect.style.display = "none";
+        cancelamentoDiv.style.display = "none";
     }
 });
 
-// Função para gerar o texto
-btnGerarTexto.addEventListener('click', () => {
-    const tipoTexto = selectTexto.value;
-    const numeroChamado = numeroChamadoInput.value;
-    const protocolo = inputProtocolo.value;
-
-    if (tipoTexto === 'cancelamentoChamado' && numeroChamado) {
-        if (!validarProtocolo(protocolo) || !validarNumeroChamado(numeroChamado)) {
-            alertMessage.innerHTML = 'Formato inválido! Use DDMMAAAA-XXXXX.';
-            alertMessage.style.display = 'block';
-
-            setTimeout(() => {
-                alertMessage.style.display = 'none';
-            }, 2000);
-            return; // Saia da função se a validação falhar
-        }
-
-        const texto = textos.cancelamentoChamado
-            .replace('{{CHAMADO}}', numeroChamado)
-            .replace('{{PROTOCOLO}}', protocolo);
-
-        textareaTextoGerado.value = texto;
-
-    } else if (tipoTexto) { // Se um tipo de texto foi selecionado
-        if (!validarProtocolo(protocolo)) {
-            alertMessage.innerHTML = 'Formato inválido para o protocolo! Use DDMMAAAA-XXXXX.';
-            alertMessage.style.display = 'block';
-
-            setTimeout(() => {
-                alertMessage.style.display = 'none';
-            }, 2000);
-            return; // Saia da função se a validação falhar
-        }
-
-        // Gera o texto com o protocolo
-        const texto = textos[tipoTexto].replace('{{PROTOCOLO}}', protocolo);
-        textareaTextoGerado.value = texto;
-
+// Mostra a div de cancelamento quando necessário
+textoSelect.addEventListener("change", function () {
+    if (this.value === "cancelamentoChamado") {
+        cancelamentoDiv.style.display = "block";
     } else {
-        alertMessage.innerText = 'Por favor, preencha todos os campos necessários.';
-        alertMessage.style.display = 'block';
-        setTimeout(() => {
-            alertMessage.style.display = 'none';
-        }, 2000);
+        cancelamentoDiv.style.display = "none";
     }
 });
 
-// Função para copiar o texto gerado
-btnCopiarTexto.addEventListener('click', () => {
-    textareaTextoGerado.select(); // Seleciona o texto na área de texto
-    document.execCommand('copy'); // Executa o comando de copiar
-    showAlert('Texto copiado!'); // Chama a função para mostrar o alerta
+// Gerar texto baseado na seleção
+gerarTextoButton.addEventListener("click", function () {
+    const selectedTexto = textoSelect.value;
+    textoGerado.value = textos[selectedTexto] || "";
 });
 
-// Função para mostrar alerta com mensagem personalizada
-function showAlert(message) {
-    alertMessage.innerHTML = message; // Define a mensagem do alerta
-    alertMessage.classList.add('show'); // Adiciona a classe para exibir o alerta
+// Copiar texto gerado
+const copiarTextoButton = document.getElementById("copiarTexto");
+const alertMessage = document.getElementById("alertMessage");
+
+copiarTextoButton.addEventListener("click", function () {
+    textoGerado.select();
+    document.execCommand("copy");
+    alertMessage.style.display = "block";
     setTimeout(() => {
-        alertMessage.classList.remove('show'); // Remove a classe após 2 segundos
+        alertMessage.style.display = "none";
     }, 2000);
+});
+
+// Modal para carimbo
+const carimboModal = document.getElementById("carimboModal");
+const closeModal = document.getElementById("closeModal");
+const selectCarimbo = document.getElementById("selectCarimbo");
+const carimboInputsDiv = document.getElementById("carimboInputsDiv");
+
+function openCarimboModal() {
+    carimboModal.style.display = "block";
 }
 
+closeModal.onclick = function () {
+    carimboModal.style.display = "none";
+}
+
+window.onclick = function (event) {
+    if (event.target === carimboModal) {
+        carimboModal.style.display = "none";
+    }
+}
+
+// Evento para seleção do carimbo
+selectCarimbo.addEventListener("change", function () {
+    const selectedValue = this.value;
+
+    // Esconde todos os inputs
+    const inputsToHide = ["whatsappNocMassivaInputs", "transferenciaCmoReparoInputs", "transferenciaCaParceiroInputs"];
+    inputsToHide.forEach(id => {
+        document.getElementById(id).style.display = "none";
+        // Limpa os valores de entrada para cada seção de entrada oculta
+        document.querySelectorAll(`#${id} input`).forEach(input => input.value = "");
+    });
+
+    // Mostra o input correspondente
+    if (selectedValue) {
+        document.getElementById(selectedValue + "Inputs").style.display = "block";
+        carimboInputsDiv.style.display = "block"; // Exibe o div de inputs
+    } else {
+        carimboInputsDiv.style.display = "none"; // Esconde o div de inputs
+    }
+});
+
+// Confirmação do carimbo
+document.getElementById("confirmarCarimbo").addEventListener("click", function () {
+    const selectedCarimbo = selectCarimbo.value;
+    const inputs = Array.from(document.querySelectorAll(`#${selectedCarimbo + "Inputs"} input`));
+    const values = inputs.map(input => `${input.placeholder}: ${input.value}`).join("\n");
+
+    const textoComCarimbo = `
+            Carimbo Selecionado: ${selectedCarimbo}
+            ${values}
+            `;
+    alert(textoComCarimbo); // Exibe o texto com os dados do carimbo
+
+    carimboModal.style.display = "none"; // Fecha o modal após a confirmação
+});
+
+// Reabrir o modal ao selecionar a opção de carimbo
+tipoMensagem.addEventListener("change", function () {
+    if (this.value === "carimbo") {
+        openCarimboModal(); // Abre o modal ao selecionar carimbo
+    }
+});
