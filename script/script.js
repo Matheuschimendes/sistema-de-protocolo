@@ -65,7 +65,6 @@
                 return `
                     # Carimbo WhatsApp - NOC MASSIVA
 
-                    Carimbo Selecionado: WhatsApp - NOC MASSIVA
                     UNIDADE: ${inputs.unidade}
                     OLT: ${inputs.olt}
                     SLOT: ${inputs.slot}
@@ -78,7 +77,6 @@
                 return `
                     # Carimbo Transferência - CMO REPARO
 
-                    Carimbo Selecionado: Transferência - CMO REPARO
                     Análise: ${inputs.analise}
                     Orientações: ${inputs.orientacoes}
                     Endereço: ${inputs.enderecoCmoReparo}
@@ -91,7 +89,6 @@
                 return `
                     # Carimbo Transferência - CA - PARCEIRO
 
-                    Carimbo Selecionado: Transferência - CA - PARCEIRO
                     Análise: ${inputs.analiseParceiro}
                     Parceiro: ${inputs.parceiro}
                     Orientação: ${inputs.orientacaoParceiro}
