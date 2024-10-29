@@ -1,218 +1,228 @@
+// Declaração do objeto textos
+const textos = {
+    falhaEletrica: `
+    Prezados,
 
-        // Declaração do objeto textos
-        const textos = {
-            falhaEletrica: `
-                Prezados,
+    Verificamos que o equipamento está com alarme de falha elétrica, poderia verificar e validar essa informação por gentileza?
 
-                Informamos que o equipamento está com alarme de falha elétrica.
+    Segue protocolo do chamado: {{PROTOCOLO}}`,
 
-                Segue protocolo do atendimento.
-            `,
-            equipamentoOk: `
-                Prezados,
+    equipamentoOk: `
+    Prezados, 
 
-                Informamos que o equipamento está OK e operacional. O atendimento foi finalizado.
+    Verificamos que o equipamento se encontra operacional, poderia validar por gentileza?
 
-                Segue protocolo do atendimento.
-            `,
-            enviadoCampo: `
-                Prezados,
+    Segue protocolo do chamado: {{PROTOCOLO}}`,
 
-                O chamado foi enviado para campo para verificação.
+    enviadoCampo: `
+    Prezados, 
 
-                Segue protocolo do atendimento.
-            `,
-            informacoesInsuficientes: `
-                Prezados,
+    Seguimos a abertura de seu chamado no protocolo: {{PROTOCOLO}} 
 
-                Infelizmente não conseguimos seguir com a solicitação, pois as informações estão insuficientes. Favor, nos encaminhar as informações necessárias para que possamos atender.
+    Informamos que foi encontrada uma falha no equipamento, técnico em campo foi acionado e enviado até o local realizando reconfiguração do equipamento e restabelecendo a conexão.
 
-                Segue protocolo do atendimento.
-            `,
-            cancelamentoChamado: `
-                Prezados,
+    Qualquer dúvida estamos à disposição.`,
 
-                O chamado foi cancelado conforme solicitado.
+    informacoesInsuficientes: `
+    Prezados,
 
-                Segue protocolo do atendimento.
-            `,
-            emailProtocolo: `
-                Prezados,
+    Informamos que não foi possível identificar a origem da falha, precisamos de mais informações para seguirmos com a análise, poderiam nos informar?
 
-                O protocolo foi enviado para o e-mail solicitado.
+    Segue protocolo do chamado: {{PROTOCOLO}}`,
 
-                Segue protocolo do atendimento.
-            `,
-            falhaEletricaOperacional: `
-                Prezados,
+    cancelamentoChamado: `
+    Prezados,
 
-                O equipamento está com alarme de falha elétrica, porém ainda se encontra operacional.
+    Informamos que o chamado de número {{NUMERO_CHAMADO}} foi cancelado. 
 
-                Segue protocolo do atendimento.
-            `
-        };
+    Segue protocolo do chamado: {{PROTOCOLO}}`,
 
-        // Exibir ou ocultar o campo texto baseado no tipo de mensagem
-        const tipoMensagem = document.getElementById("tipoMensagem");
-        const textoSelect = document.getElementById("texto");
-        const cancelamentoDiv = document.getElementById("cancelamentoDiv");
-        const gerarTextoButton = document.getElementById("gerarTexto");
-        const textoGerado = document.getElementById("textoGerado");
+    emailProtocolo: `
+    Prezados,
 
-        // Objeto para textos de carimbo
-        const textosCarimbo = {
-            whatsappNocMassiva: function(inputs) {
-                return `
-                    # Carimbo WhatsApp - NOC MASSIVA
+    Agradecemos pelo seu contato. O protocolo gerado para sua solicitação é: {{PROTOCOLO}}. 
 
-                    UNIDADE: ${inputs.unidade}
-                    OLT: ${inputs.olt}
-                    SLOT: ${inputs.slot}
-                    PON: ${inputs.pon}
-                    Serial da ONU: ${inputs.serialONU}
-                    Contrato: ${inputs.contrato}
-                `;
-            },
-            transferenciaCmoReparo: function(inputs) {
-                return `
-                    # Carimbo Transferência - CMO REPARO
+    Caso tenha mais dúvidas, estamos à disposição.`,
 
-                    Análise: ${inputs.analise}
-                    Orientações: ${inputs.orientacoes}
-                    Endereço: ${inputs.enderecoCmoReparo}
-                    Horário de Funcionamento: ${inputs.horarioFuncionamento}
-                    Telefone: ${inputs.telefoneCmoReparo}
-                    E-mail: ${inputs.emailCmoReparo}
-                `;
-            },
-            transferenciaCaParceiro: function(inputs) {
-                return `
-                    # Carimbo Transferência - CA - PARCEIRO
+    falhaEletricaOperacional: `
+    Prezados,
 
-                    Análise: ${inputs.analiseParceiro}
-                    Parceiro: ${inputs.parceiro}
-                    Orientação: ${inputs.orientacaoParceiro}
-                    Endereço: ${inputs.enderecoParceiro}
-                    Horário de Funcionamento: ${inputs.horarioFuncionamentoParceiro}
-                    Telefone: ${inputs.telefoneParceiro}
-                `;
-            }
-        };
+    Verificamos que o equipamento está com alarme de falha elétrica, porém encontra-se operacional. Poderiam validar essa informação por gentileza?
 
-        tipoMensagem.addEventListener("change", function () {
-            if (this.value === "texto") {
-                textoSelect.style.display = "block";
-                cancelamentoDiv.style.display = "none";
-            } else if (this.value === "carimbo") {
-                textoSelect.style.display = "none";
-                cancelamentoDiv.style.display = "none";
-                openCarimboModal(); // Abre o modal ao selecionar carimbo
-            } else {
-                textoSelect.style.display = "none";
-                cancelamentoDiv.style.display = "none";
-            }
-        });
+    Segue protocolo do chamado: {{PROTOCOLO}}`
+};
 
-        // Mostra a div de cancelamento quando necessário
-        textoSelect.addEventListener("change", function () {
-            if (this.value === "cancelamentoChamado") {
-                cancelamentoDiv.style.display = "block";
-            } else {
-                cancelamentoDiv.style.display = "none";
-            }
-        });
+const tipoMensagemSelect = document.getElementById("tipoMensagem");
+const textoSelect = document.getElementById("texto");
+const cancelamentoDiv = document.getElementById("cancelamentoDiv");
+const gerarTextoButton = document.getElementById("gerarTexto");
+const textoGeradoTextarea = document.getElementById("textoGerado");
+const copiarTextoButton = document.getElementById("copiarTexto");
+const alertMessage = document.getElementById("alertMessage");
 
-        // Gerar texto baseado na seleção
-        gerarTextoButton.addEventListener("click", function () {
-            const selectedTexto = textoSelect.value;
-            if (tipoMensagem.value === "texto") {
-                // Para textos comuns
-                textoGerado.value = textos[selectedTexto] || "";
-            } else if (tipoMensagem.value === "carimbo") {
-                // Para carimbos
-                const selectedCarimbo = selectCarimbo.value;
-                const inputs = {};
-                const inputFields = document.querySelectorAll(`#${selectedCarimbo + "Inputs"} input`);
-                inputFields.forEach(input => {
-                    inputs[input.id] = input.value;
-                });
+// Modal
+const carimboModal = document.getElementById("carimboModal");
+const closeModal = document.getElementById("closeModal");
+const carimboSelect = document.getElementById("selectCarimbo");
+const carimboInputsDiv = document.getElementById("carimboInputsDiv");
 
-                textoGerado.value = textosCarimbo[selectedCarimbo](inputs);
-            }
-        });
+// Função para abrir o modal
+function openModal() {
+    carimboModal.style.display = "block";
+}
 
-        // Copiar texto gerado
-        const copiarTextoButton = document.getElementById("copiarTexto");
-        const alertMessage = document.getElementById("alertMessage");
+// Função para fechar o modal
+closeModal.onclick = function() {
+    carimboModal.style.display = "none";
+}
 
-        copiarTextoButton.addEventListener("click", function () {
-            textoGerado.select();
-            document.execCommand("copy");
-            alertMessage.style.display = "block";
-            setTimeout(() => {
-                alertMessage.style.display = "none";
-            }, 2000);
-        });
+// Fecha o modal se o usuário clicar fora dele
+window.onclick = function(event) {
+    if (event.target === carimboModal) {
+        carimboModal.style.display = "none";
+    }
+}
 
-        // Modal para carimbo
-        const carimboModal = document.getElementById("carimboModal");
-        const closeModal = document.getElementById("closeModal");
-        const selectCarimbo = document.getElementById("selectCarimbo");
-        const carimboInputsDiv = document.getElementById("carimboInputsDiv");
+// Event listener para o tipo de mensagem
+tipoMensagemSelect.addEventListener("change", function() {
+    if (this.value === "texto") {
+        textoSelect.style.display = "block";
+        cancelamentoDiv.style.display = "none";
+        carimboInputsDiv.style.display = "none";
+    } else if (this.value === "carimbo") {
+        textoSelect.style.display = "none";
+        openModal(); // Abre o modal ao selecionar carimbo
+        cancelamentoDiv.style.display = "none";
+    } else {
+        textoSelect.style.display = "none";
+        cancelamentoDiv.style.display = "none";
+        carimboInputsDiv.style.display = "none";
+    }
+});
 
-        function openCarimboModal() {
-            carimboModal.style.display = "block";
-        }
+// Event listener para o texto
+textoSelect.addEventListener("change", function() {
+    if (this.value === "cancelamentoChamado") {
+        cancelamentoDiv.style.display = "block";
+    } else {
+        cancelamentoDiv.style.display = "none";
+    }
+});
 
-        closeModal.onclick = function () {
-            carimboModal.style.display = "none";
-        }
+// Event listener para o carimbo
+carimboSelect.addEventListener("change", function() {
+    const selectedValue = this.value;
 
-        window.onclick = function (event) {
-            if (event.target === carimboModal) {
-                carimboModal.style.display = "none";
+    // Esconde todos os inputs
+    const inputsToHide = ["whatsappNocMassivaInputs", "transferenciaCmoReparoInputs", "transferenciaCaParceiroInputs"];
+    inputsToHide.forEach(id => {
+        document.getElementById(id).style.display = "none";
+    });
+
+    // Mostra o input correspondente
+    if (selectedValue) {
+        document.getElementById(selectedValue + "Inputs").style.display = "block";
+        carimboInputsDiv.style.display = "block"; // Exibe o div de inputs
+    } else {
+        carimboInputsDiv.style.display = "none"; // Esconde o div de inputs
+    }
+});
+
+// Gerar texto
+gerarTextoButton.addEventListener("click", function() {
+    const protocolo = document.getElementById("protocolo").value;
+    let mensagemGerada = "";
+
+    if (tipoMensagemSelect.value === "texto") {
+        const textoEscolhido = textoSelect.value;
+        if (textoEscolhido) {
+            mensagemGerada = textos[textoEscolhido].replace("{{PROTOCOLO}}", protocolo);
+            if (textoEscolhido === "cancelamentoChamado") {
+                const numeroChamado = document.getElementById("numeroChamado").value;
+                mensagemGerada = mensagemGerada.replace("{{NUMERO_CHAMADO}}", numeroChamado);
             }
         }
+    } else if (tipoMensagemSelect.value === "carimbo") {
+        const carimboEscolhido = carimboSelect.value;
+        if (carimboEscolhido) {
+            // Aqui você pode adicionar a lógica para gerar texto com base no carimbo
+            mensagemGerada = "Carimbo escolhido: " + carimboEscolhido;
+            // Adicionar lógica para preencher a mensagem gerada com dados dos inputs específicos.
+            if (carimboEscolhido === "whatsappNocMassiva") {
+                const unidade = document.getElementById("unidade").value;
+                const olt = document.getElementById("olt").value;
+                const slot = document.getElementById("slot").value;
+                const pon = document.getElementById("pon").value;
+                const serialONU = document.getElementById("serialONU").value;
+                const contrato = document.getElementById("contrato").value;
 
-        // Evento para seleção do carimbo
-        selectCarimbo.addEventListener("change", function () {
-            const selectedValue = this.value;
+                mensagemGerada = `
+                Carimbo WhatsApp - NOC MASSIVA:
+                Unidade: ${unidade}
+                OLT: ${olt}
+                Slot: ${slot}
+                PON: ${pon}
+                Serial ONU: ${serialONU}
+                Contrato: ${contrato}
+                `;
+            } else if (carimboEscolhido === "transferenciaCmoReparo") {
+                const analise = document.getElementById("analise").value;
+                const orientacoes = document.getElementById("orientacoes").value;
+                const enderecoCmoReparo = document.getElementById("enderecoCmoReparo").value;
+                const horarioFuncionamento = document.getElementById("horarioFuncionamento").value;
+                const telefoneCmoReparo = document.getElementById("telefoneCmoReparo").value;
+                const emailCmoReparo = document.getElementById("emailCmoReparo").value;
 
-            // Esconde todos os inputs
-            const inputsToHide = ["whatsappNocMassivaInputs", "transferenciaCmoReparoInputs", "transferenciaCaParceiroInputs"];
-            inputsToHide.forEach(id => {
-                document.getElementById(id).style.display = "none";
-                // Limpa os valores de entrada para cada seção de entrada oculta
-                document.querySelectorAll(`#${id} input`).forEach(input => input.value = "");
-            });
+                mensagemGerada = `
+                Carimbo Transferência - CMO REPARO:
+                Análise: ${analise}
+                Orientações: ${orientacoes}
+                Endereço: ${enderecoCmoReparo}
+                Horário de Funcionamento: ${horarioFuncionamento}
+                Telefone: ${telefoneCmoReparo}
+                E-mail: ${emailCmoReparo}
+                `;
+            } else if (carimboEscolhido === "transferenciaCaParceiro") {
+                const analiseParceiro = document.getElementById("analiseParceiro").value;
+                const parceiro = document.getElementById("parceiro").value;
+                const orientacaoParceiro = document.getElementById("orientacaoParceiro").value;
+                const enderecoParceiro = document.getElementById("enderecoParceiro").value;
+                const horarioFuncionamentoParceiro = document.getElementById("horarioFuncionamentoParceiro").value;
+                const telefoneParceiro = document.getElementById("telefoneParceiro").value;
+                const emailParceiro = document.getElementById("emailParceiro").value;
 
-            // Mostra o input correspondente
-            if (selectedValue) {
-                document.getElementById(selectedValue + "Inputs").style.display = "block";
-                carimboInputsDiv.style.display = "block"; // Exibe o div de inputs
-            } else {
-                carimboInputsDiv.style.display = "none"; // Esconde o div de inputs
+                mensagemGerada = `
+                Carimbo Transferência - CA - PARCEIRO:
+                Análise: ${analiseParceiro}
+                Parceiro: ${parceiro}
+                Orientação: ${orientacaoParceiro}
+                Endereço: ${enderecoParceiro}
+                Horário de Funcionamento: ${horarioFuncionamentoParceiro}
+                Telefone: ${telefoneParceiro}
+                E-mail: ${emailParceiro}
+                `;
             }
-        });
+        }
+    }
 
-        // Confirmação do carimbo
-        document.getElementById("confirmarCarimbo").addEventListener("click", function () {
-            const selectedCarimbo = selectCarimbo.value;
-            const inputs = Array.from(document.querySelectorAll(`#${selectedCarimbo + "Inputs"} input`));
-            const values = inputs.map(input => `${input.placeholder}: ${input.value}`).join("\n");
+    textoGeradoTextarea.value = mensagemGerada;
+});
 
-            const textoComCarimbo = `
-                Carimbo Selecionado: ${selectedCarimbo}
-                ${values}
-            `;
-            alert(textoComCarimbo); // Exibe o texto com os dados do carimbo
+// Copiar texto
+copiarTextoButton.addEventListener("click", function() {
+    textoGeradoTextarea.select();
+    document.execCommand("copy");
+    alertMessage.style.display = "block";
+    setTimeout(() => {
+        alertMessage.style.display = "none";
+    }, 2000);
+});
 
-            carimboModal.style.display = "none"; // Fecha o modal após a confirmação
-        });
-
-        // Reabrir o modal ao selecionar a opção de carimbo
-        tipoMensagem.addEventListener("change", function () {
-            if (this.value === "carimbo") {
-                openCarimboModal(); // Abre o modal ao selecionar carimbo
-            }
-        });
+// Confirmação de carimbo
+document.getElementById("confirmarCarimbo").addEventListener("click", function() {
+    const carimboEscolhido = carimboSelect.value;
+    if (carimboEscolhido) {
+        // Fecha o modal
+        closeModal.click();
+    }
+});
