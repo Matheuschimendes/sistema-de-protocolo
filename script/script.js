@@ -3,7 +3,7 @@ const textos = {
     falhaEletrica: `
     Prezados,
 
-    Verificamos que o equipamento está com alarme de falha elétrica, poderia verificar e validar essa informação por gentileza?
+    Verificamos que o equipamento esta com alarme de falha elétrica, poderia verificar e validar essa informação por gentileza?
 
     Segue protocolo do chamado: {{PROTOCOLO}}`,
 
@@ -40,7 +40,8 @@ const textos = {
     emailProtocolo: `
     Prezados,
 
-    Agradecemos pelo seu contato. O protocolo gerado para sua solicitação é: {{PROTOCOLO}}. 
+    Informo que foi gerado protocolo: {{PROTOCOLO}}, e que seu caso foi enviado para a equipe de analistas, 
+    logo mais retornaremos com atualizações sobre o seu caso. 
 
     Caso tenha mais dúvidas, estamos à disposição.`,
 
@@ -72,19 +73,19 @@ function openModal() {
 }
 
 // Função para fechar o modal
-closeModal.onclick = function() {
+closeModal.onclick = function () {
     carimboModal.style.display = "none";
 }
 
 // Fecha o modal se o usuário clicar fora dele
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target === carimboModal) {
         carimboModal.style.display = "none";
     }
 }
 
 // Event listener para o tipo de mensagem
-tipoMensagemSelect.addEventListener("change", function() {
+tipoMensagemSelect.addEventListener("change", function () {
     if (this.value === "texto") {
         textoSelect.style.display = "block";
         cancelamentoDiv.style.display = "none";
@@ -101,7 +102,7 @@ tipoMensagemSelect.addEventListener("change", function() {
 });
 
 // Event listener para o texto
-textoSelect.addEventListener("change", function() {
+textoSelect.addEventListener("change", function () {
     if (this.value === "cancelamentoChamado") {
         cancelamentoDiv.style.display = "block";
     } else {
@@ -110,7 +111,7 @@ textoSelect.addEventListener("change", function() {
 });
 
 // Event listener para o carimbo
-carimboSelect.addEventListener("change", function() {
+carimboSelect.addEventListener("change", function () {
     const selectedValue = this.value;
 
     // Esconde todos os inputs
@@ -129,7 +130,7 @@ carimboSelect.addEventListener("change", function() {
 });
 
 // Gerar texto
-gerarTextoButton.addEventListener("click", function() {
+gerarTextoButton.addEventListener("click", function () {
     const protocolo = document.getElementById("protocolo").value;
     let mensagemGerada = "";
 
@@ -209,7 +210,7 @@ gerarTextoButton.addEventListener("click", function() {
 });
 
 // Copiar texto
-copiarTextoButton.addEventListener("click", function() {
+copiarTextoButton.addEventListener("click", function () {
     textoGeradoTextarea.select();
     document.execCommand("copy");
     alertMessage.style.display = "block";
@@ -219,7 +220,7 @@ copiarTextoButton.addEventListener("click", function() {
 });
 
 // Confirmação de carimbo
-document.getElementById("confirmarCarimbo").addEventListener("click", function() {
+document.getElementById("confirmarCarimbo").addEventListener("click", function () {
     const carimboEscolhido = carimboSelect.value;
     if (carimboEscolhido) {
         // Fecha o modal
