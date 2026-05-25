@@ -1,177 +1,290 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR" data-theme="light" data-layout="sophisticated" data-workspace="balanced">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Gerador de Protocolos</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" type="image/png" href="photo/image.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Familjen+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="style/style.css?v=20260525d">
 </head>
 <body>
-    <div class="app">
-        <aside class="sidebar" aria-label="Navegacao lateral">
-            <div class="sidebar-brand">
-                <span class="brand-kicker">OPERATION</span>
-                <strong>Gerador de Protocolos</strong>
-            </div>
+    <div class="shell app">
+        <aside class="rail" aria-label="Acesso rápido">
+            <div class="rail-logo"><i class="ti ti-broadcast" aria-hidden="true"></i></div>
 
-            <nav class="sidebar-nav">
-                <button class="nav-item is-active" data-nav="textos" type="button">Textos</button>
-                <button class="nav-item" data-nav="carimbos" type="button">Carimbos</button>
-                <button class="nav-item" data-nav="historico" type="button">Historico</button>
-                <button class="nav-item" data-nav="favoritos" type="button">Favoritos</button>
-                <button class="nav-item" data-nav="configuracoes" type="button">Configurações</button>
-            </nav>
+            <button class="rail-btn is-active" data-nav="textos" type="button" title="Textos"><i class="ti ti-file-text" aria-hidden="true"></i></button>
+            <button class="rail-btn" data-nav="carimbos" type="button" title="Carimbos"><i class="ti ti-stamp" aria-hidden="true"></i></button>
+            <button class="rail-btn" data-nav="historico" type="button" title="Histórico"><i class="ti ti-history" aria-hidden="true"></i></button>
+            <button class="rail-btn" data-nav="favoritos" type="button" title="Favoritos"><i class="ti ti-star" aria-hidden="true"></i></button>
 
-            <div class="sidebar-shortcuts">
-                <p>Atalhos</p>
-                <ul>
-                    <li><kbd>Ctrl</kbd> + <kbd>Enter</kbd> Gerar</li>
-                    <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> Copiar</li>
-                    <li><kbd>Ctrl</kbd> + <kbd>K</kbd> Busca</li>
-                </ul>
+            <div class="rail-sep"></div>
+
+            <button class="rail-btn" data-nav="configuracoes" type="button" title="Configurações"><i class="ti ti-settings" aria-hidden="true"></i></button>
+
+            <div class="rail-bottom">
+                <button id="themeToggle" class="rail-btn" type="button" title="Alternar tema" aria-pressed="false"><i class="ti ti-moon" aria-hidden="true"></i></button>
+                <button class="rail-btn" type="button" title="Operador"><i class="ti ti-user-circle" aria-hidden="true"></i></button>
             </div>
         </aside>
 
-        <main class="workspace">
-            <header class="workspace-header">
-                <div>
-                    <h1>Gerador de Protocolos</h1>
-                    <p class="subtitle">Ferramenta operacional para mensagens padronizadas e carimbos tecnicos.</p>
-                </div>
+        <aside class="sidebar" aria-label="Navegação">
+            <div class="sidebar-head">
+                <div class="sidebar-title">Protocolos</div>
 
-                <div class="header-actions">
-                    <div class="command-wrap">
-                        <label class="sr-only" for="quickSearch">Busca rapida</label>
-                        <input id="quickSearch" type="search" placeholder="Buscar texto, carimbo ou protocolo..." autocomplete="off">
-                        <ul id="commandResults" class="command-results is-hidden" aria-label="Resultados da busca"></ul>
+                <div class="search-box command-wrap">
+                    <i class="ti ti-search" aria-hidden="true"></i>
+                    <label class="sr-only" for="quickSearch">Buscar template ou protocolo</label>
+                    <input id="quickSearch" type="search" placeholder="Buscar..." autocomplete="off">
+                    <ul id="commandResults" class="command-results is-hidden" aria-label="Resultados da busca"></ul>
+                </div>
+            </div>
+
+            <nav class="sidebar-section sidebar-nav" aria-label="Seções">
+                <div class="section-label">Seções</div>
+
+                <button class="nav-item is-active" data-nav="textos" type="button">
+                    <i class="ti ti-file-description" aria-hidden="true"></i>
+                    <span>Textos prontos</span>
+                    <span class="nav-badge">7</span>
+                </button>
+
+                <button class="nav-item" data-nav="carimbos" type="button">
+                    <i class="ti ti-stamp" aria-hidden="true"></i>
+                    <span>Carimbos</span>
+                    <span class="nav-badge">3</span>
+                </button>
+
+                <button class="nav-item" data-nav="historico" type="button">
+                    <i class="ti ti-history" aria-hidden="true"></i>
+                    <span>Histórico</span>
+                </button>
+
+                <button class="nav-item" data-nav="favoritos" type="button">
+                    <i class="ti ti-star" aria-hidden="true"></i>
+                    <span>Favoritos</span>
+                </button>
+
+                <button class="nav-item" data-nav="configuracoes" type="button">
+                    <i class="ti ti-settings" aria-hidden="true"></i>
+                    <span>Configurações</span>
+                </button>
+            </nav>
+
+            <section class="sidebar-recents" aria-label="Protocolos recentes">
+                <div class="section-label">Recentes</div>
+                <div id="recentProtocols" class="recent-list"></div>
+            </section>
+            
+        </aside>
+
+        <section class="main form-card" aria-label="Formulário">
+            <header class="main-header">
+                <div>
+                    <div class="main-meta">
+                        <div class="breadcrumb">
+                            <i class="ti ti-home" aria-hidden="true"></i>
+                            NOC · Gerador
+                        </div>
                     </div>
 
-                    <button id="themeToggle" class="btn btn-outline" type="button" aria-pressed="false">Modo escuro</button>
+                    <h1 class="main-title">Novo protocolo</h1>
+                    <p class="main-sub">Preencha os campos para gerar a mensagem operacional.</p>
+                </div>
+
+                <div class="main-right-actions">
+                    <div class="status-indicator">
+                        <span class="s-dot" aria-hidden="true"></span>
+                        <span id="saveStatus" class="save-status is-saved" aria-live="polite">Salvo</span>
+                    </div>
                 </div>
             </header>
 
-            <section class="recent-bar" aria-label="Acesso rapido a protocolos">
-                <span>Ultimos protocolos:</span>
-                <div id="recentProtocols" class="chip-list"></div>
-            </section>
+            <div class="form-body">
+                <div class="protocol-zone">
+                    <label class="pz-label" for="protocolo">
+                        <i class="ti ti-hash" aria-hidden="true"></i>
+                        Número do protocolo <span class="pz-req">*</span>
+                    </label>
 
-            <section class="workspace-grid" aria-label="Editor de protocolo">
-                <article class="card form-card">
-                    <div class="card-head">
-                        <h2>Formulario dinamico</h2>
-                        <button id="toggleFavorite" class="btn btn-subtle" type="button">Salvar favorito</button>
+                    <input id="protocolo" class="pz-input" type="text" placeholder="22052026-00000" autocomplete="off">
+                    <p class="pz-hint">Formato sugerido: DDMMAAAA-NNNNN</p>
+                </div>
+
+                <div class="form-context" aria-live="polite">
+                    <span id="requiredStatus">Preencha os campos obrigatórios</span>
+                    <span id="currentTemplate">Template não selecionado</span>
+                </div>
+
+                <div class="field-row">
+                    <div class="f-label">Tipo de mensagem</div>
+
+                    <div class="type-switcher" role="tablist" aria-label="Tipo de mensagem">
+                        <button id="tabTexto" class="type-card is-active" role="tab" aria-selected="true" type="button">
+                            <span class="tc-icon"><i class="ti ti-file-text" aria-hidden="true"></i></span>
+                            <span>
+                                <strong class="tc-label">Texto pronto</strong>
+                                <small class="tc-sub">Templates rápidos</small>
+                            </span>
+                        </button>
+
+                        <button id="tabCarimbo" class="type-card" role="tab" aria-selected="false" type="button">
+                            <span class="tc-icon"><i class="ti ti-stamp" aria-hidden="true"></i></span>
+                            <span>
+                                <strong class="tc-label">Carimbo</strong>
+                                <small class="tc-sub">Transferências e NOC</small>
+                            </span>
+                        </button>
                     </div>
+                </div>
 
-                    <div class="field-group">
-                        <label for="protocolo">Numero do protocolo <span class="required">*</span></label>
-                        <input id="protocolo" type="text" placeholder="Ex: 22052026-00000" autocomplete="off">
-                    </div>
-
-                    <div class="tabs" role="tablist" aria-label="Tipo de mensagem">
-                        <button id="tabTexto" class="tab is-active" role="tab" aria-selected="true" type="button">Textos</button>
-                        <button id="tabCarimbo" class="tab" role="tab" aria-selected="false" type="button">Carimbos</button>
-                    </div>
-
-                    <section id="textoSection" class="section-block" aria-label="Textos prontos">
-                        <div class="field-group">
-                            <label for="texto">Template de texto <span class="required">*</span></label>
-                            <select id="texto">
-                                <option value="">--Selecione--</option>
-                                <option value="falhaEletrica">Falha Eletrica</option>
+                <section id="textoSection" class="section-block" aria-label="Textos prontos">
+                    <div class="field-row">
+                        <label class="f-label" for="texto">Template <span class="f-req">*</span></label>
+                        <div class="f-select-wrap">
+                            <select id="texto" class="f-select">
+                                <option value="">Selecione um template...</option>
+                                <option value="falhaEletrica">Falha Elétrica</option>
                                 <option value="equipamentoOk">Equipamento OK</option>
                                 <option value="enviadoCampo">Enviado para Campo</option>
-                                <option value="informacoesInsuficientes">Informacoes Insuficientes</option>
+                                <option value="informacoesInsuficientes">Informações Insuficientes</option>
                                 <option value="cancelamentoChamado">Cancelamento de Chamado</option>
                                 <option value="emailProtocolo">E-mail com Protocolo</option>
-                                <option value="falhaEletricaOperacional">Falha Eletrica mas Operacional</option>
+                                <option value="falhaEletricaOperacional">Falha Elétrica mas Operacional</option>
                             </select>
                         </div>
+                    </div>
 
-                        <div id="cancelamentoDiv" class="field-group is-hidden">
-                            <label for="numeroChamado">Numero do chamado cancelado <span class="required">*</span></label>
-                            <input id="numeroChamado" type="text" placeholder="Ex: 998877" autocomplete="off">
-                        </div>
-                    </section>
+                    <div id="cancelamentoDiv" class="field-row is-hidden">
+                        <label class="f-label" for="numeroChamado">Número do chamado cancelado <span class="f-req">*</span></label>
+                        <input id="numeroChamado" class="f-input" type="text" placeholder="Ex: 998877" autocomplete="off">
+                    </div>
+                </section>
 
-                    <section id="carimboSection" class="section-block is-hidden" aria-label="Carimbos">
-                        <div class="field-group">
-                            <label for="selectCarimbo">Tipo de carimbo <span class="required">*</span></label>
-                            <select id="selectCarimbo">
-                                <option value="">--Selecione--</option>
+                <section id="carimboSection" class="section-block is-hidden" aria-label="Carimbos">
+                    <div class="field-row">
+                        <label class="f-label" for="selectCarimbo">Tipo de carimbo <span class="f-req">*</span></label>
+                        <div class="f-select-wrap">
+                            <select id="selectCarimbo" class="f-select">
+                                <option value="">Selecione um carimbo...</option>
                                 <option value="whatsappNocMassiva">WhatsApp - NOC MASSIVA</option>
-                                <option value="transferenciaCmoReparo">Transferencia - CMO REPARO</option>
-                                <option value="transferenciaCaParceiro">Transferencia - CA - PARCEIRO</option>
+                                <option value="transferenciaCmoReparo">Transferência - CMO REPARO</option>
+                                <option value="transferenciaCaParceiro">Transferência - CA - PARCEIRO</option>
                             </select>
                         </div>
+                    </div>
 
-                        <div id="carimboFieldsContainer" class="dynamic-fields"></div>
-                    </section>
+                    <div id="carimboFieldsContainer" class="dynamic-fields"></div>
+                </section>
 
-                    <div id="validationBox" class="validation is-hidden" role="alert" aria-live="assertive">
-                        <strong>Campos obrigatorios pendentes:</strong>
+                <div id="validationBox" class="val-strip is-hidden" role="alert" aria-live="assertive">
+                    <i class="ti ti-alert-circle" aria-hidden="true"></i>
+                    <div class="val-body">
+                        <div class="val-title">Campos obrigatórios pendentes</div>
                         <ul id="validationList"></ul>
                     </div>
+                </div>
 
-                    <div class="action-row">
-                        <button id="gerarTexto" class="btn btn-primary" type="button">Gerar texto</button>
-                        <button id="limparFormulario" class="btn btn-outline" type="button">Limpar</button>
+                <section id="favoritosPanel" class="support-panel is-hidden" aria-label="Favoritos">
+                    <div class="support-head">
+                        <h2>Favoritos</h2>
+                        <small>Acesso rápido</small>
+                    </div>
+                    <ul id="favoritosList" class="favorite-list"></ul>
+                </section>
+
+                <section id="configPanel" class="support-panel is-hidden" aria-label="Configurações">
+                    <div class="support-head">
+                        <h2>Configurações</h2>
+                        <small>Preferências locais</small>
                     </div>
 
-                    <section id="favoritosPanel" class="aux-panel is-hidden" aria-label="Favoritos">
-                        <div class="panel-head">
-                            <h3>Favoritos</h3>
-                            <small>Templates usados com frequencia</small>
-                        </div>
-                        <ul id="favoritosList" class="favorite-list"></ul>
-                    </section>
+                    <label class="toggle-row" for="darkModeCheckbox">
+                        <span>Ativar modo escuro</span>
+                        <input id="darkModeCheckbox" type="checkbox">
+                    </label>
 
-                    <section id="configPanel" class="aux-panel is-hidden" aria-label="Configuracoes">
-                        <div class="panel-head">
-                            <h3>Configuracoes</h3>
-                            <small>Preferencias do operador</small>
-                        </div>
+                    <button id="clearStorage" class="btn-reset" type="button">
+                        <i class="ti ti-eraser" aria-hidden="true"></i>
+                        Limpar dados locais
+                    </button>
+                </section>
+            </div>
 
-                        <label class="toggle-row" for="darkModeCheckbox">
-                            <span>Ativar modo escuro</span>
-                            <input id="darkModeCheckbox" type="checkbox">
-                        </label>
+            <div class="action-bar">
+                <button id="gerarTexto" class="btn-gen" type="button">
+                    <i class="ti ti-wand" aria-hidden="true"></i>
+                    Gerar mensagem
+                </button>
 
-                        <button id="clearStorage" class="btn btn-outline" type="button">Limpar dados locais</button>
-                    </section>
-                </article>
+                <button id="limparFormulario" class="btn-reset" type="button">
+                    <i class="ti ti-refresh" aria-hidden="true"></i>
+                    Limpar
+                </button>
 
-                <article class="card preview-card">
-                    <div class="card-head">
-                        <h2>Preview em tempo real</h2>
-                        <button id="copiarTexto" class="btn btn-primary" type="button">Copiar</button>
-                    </div>
+                <button id="toggleFavorite" class="btn-reset" type="button">
+                    <i class="ti ti-star" aria-hidden="true"></i>
+                    Salvar favorito
+                </button>
+            </div>
+        </section>
 
-                    <p class="preview-note">Edicao manual liberada antes da copia final.</p>
-                    <label class="sr-only" for="textoGerado">Texto gerado</label>
-                    <textarea id="textoGerado" placeholder="O conteudo gerado aparecera aqui."></textarea>
+        <section class="output" aria-label="Mensagem gerada">
+            <header class="output-header">
+                <h2 class="out-title">
+                    <i class="ti ti-message-2-check" aria-hidden="true"></i>
+                    Mensagem gerada
+                </h2>
 
-                    <div class="preview-meta">
-                        <span id="mensagemTipo">Modo: Textos</span>
-                        <span id="contadorCaracteres">0 caracteres</span>
-                    </div>
+                <button id="copiarTexto" class="btn-copy-out" type="button">
+                    <i class="ti ti-copy" aria-hidden="true"></i>
+                    Copiar
+                </button>
+            </header>
 
-                    <section id="historicoPanel" class="history-block" aria-label="Historico de geracoes">
-                        <div class="panel-head">
-                            <h3>Historico recente</h3>
-                            <button id="limparHistorico" class="btn-link" type="button">Limpar historico</button>
-                        </div>
-                        <ul id="historicoList" class="history-list"></ul>
-                    </section>
-                </article>
+            <p class="output-hint">
+                <i class="ti ti-pencil" aria-hidden="true"></i>
+                Edite o texto antes de copiar, se necessário.
+            </p>
+
+            <label class="sr-only" for="textoGerado">Texto gerado</label>
+            <textarea id="textoGerado" class="output-textarea" placeholder="A mensagem gerada aparecerá aqui."></textarea>
+
+            <div class="output-footer">
+                <span id="mensagemTipo" class="foot-tag">
+                    <i class="ti ti-layout-list" aria-hidden="true"></i>
+                    Modo: Textos
+                </span>
+
+                <span id="contadorCaracteres" class="foot-tag">
+                    <i class="ti ti-cursor-text" aria-hidden="true"></i>
+                    0 caracteres
+                </span>
+            </div>
+
+            <section id="historicoPanel" class="hist-section" aria-label="Histórico">
+                <div class="hist-head">
+                    <span class="hist-title">
+                        <i class="ti ti-history" aria-hidden="true"></i>
+                        Histórico
+                    </span>
+                    <button id="limparHistorico" class="hist-clear" type="button">Limpar</button>
+                </div>
+
+                <ul id="historicoList" class="history-list"></ul>
             </section>
-        </main>
+        </section>
     </div>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <script src="script/script.js"></script>
+    <script src="script/script.js?v=20260525c"></script>
 </body>
 </html>

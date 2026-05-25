@@ -5,7 +5,10 @@
         history: "protocolador.history.v4",
         favorites: "protocolador.favorites.v4",
         form: "protocolador.form.v4",
-        theme: "protocolador.theme.v1"
+        theme: "protocolador.theme.v1",
+        sidebar: "protocolador.sidebar.v1",
+        layout: "protocolador.layout.v1",
+        workspace: "protocolador.workspace.v1"
     };
 
     const HISTORY_LIMIT = 18;
@@ -13,11 +16,11 @@
 
     const TEXT_TEMPLATES = {
         falhaEletrica: {
-            label: "Falha Eletrica",
+            label: "Falha Elétrica",
             build: (data, strict) => [
                 "Prezados,",
                 "",
-                "Verificamos que o equipamento esta com alarme de falha eletrica. Poderiam validar essa informacao, por gentileza?",
+                "Verificamos que o equipamento está com alarme de falha elétrica. Poderiam validar essa informação, por gentileza?",
                 "",
                 `Segue protocolo do chamado: ${token(data.protocolo, "Protocolo", strict)}`
             ].join("\n")
@@ -27,7 +30,7 @@
             build: (data, strict) => [
                 "Prezados,",
                 "",
-                "Verificamos que o equipamento se encontra operacional. Poderiam validar essa informacao, por gentileza?",
+                "Verificamos que o equipamento se encontra operacional. Poderiam validar essa informação, por gentileza?",
                 "",
                 `Segue protocolo do chamado: ${token(data.protocolo, "Protocolo", strict)}`
             ].join("\n")
@@ -39,17 +42,17 @@
                 "",
                 `Seguimos com a abertura do chamado no protocolo: ${token(data.protocolo, "Protocolo", strict)}.`,
                 "",
-                "Foi identificada uma falha no equipamento e o tecnico em campo foi acionado para tratativa.",
+                "Foi identificada uma falha no equipamento e o técnico em campo foi acionado para tratativa.",
                 "",
-                "Permanecemos a disposicao para qualquer duvida."
+                "Permanecemos à disposição para qualquer dúvida."
             ].join("\n")
         },
         informacoesInsuficientes: {
-            label: "Informacoes Insuficientes",
+            label: "Informações Insuficientes",
             build: (data, strict) => [
                 "Prezados,",
                 "",
-                "No momento nao foi possivel identificar a origem da falha. Precisamos de mais informacoes para seguir com a analise.",
+                "No momento não foi possível identificar a origem da falha. Precisamos de mais informações para seguir com a análise.",
                 "",
                 `Segue protocolo do chamado: ${token(data.protocolo, "Protocolo", strict)}`
             ].join("\n")
@@ -59,7 +62,7 @@
             build: (data, strict) => [
                 "Prezados,",
                 "",
-                `Informamos que o chamado de numero ${token(data.numeroChamado, "Numero do chamado", strict)} foi cancelado.`,
+                `Informamos que o chamado de número ${token(data.numeroChamado, "Número do chamado", strict)} foi cancelado.`,
                 "",
                 `Segue protocolo do chamado: ${token(data.protocolo, "Protocolo", strict)}`
             ].join("\n")
@@ -71,17 +74,17 @@
                 "",
                 `Informamos que foi gerado o protocolo ${token(data.protocolo, "Protocolo", strict)} e o caso foi encaminhado para a equipe de analistas.`,
                 "",
-                "Retornaremos em breve com novas atualizacoes."
+                "Retornaremos em breve com novas atualizações."
             ].join("\n")
         },
         falhaEletricaOperacional: {
-            label: "Falha Eletrica mas Operacional",
+            label: "Falha Elétrica mas Operacional",
             build: (data, strict) => [
                 "Prezados,",
                 "",
-                "Verificamos alarme de falha eletrica no equipamento, porem ele segue operacional.",
+                "Verificamos alarme de falha elétrica no equipamento, porém ele segue operacional.",
                 "",
-                "Solicitamos validacao dessa condicao para continuidade do atendimento.",
+                "Solicitamos validação dessa condição para continuidade do atendimento.",
                 "",
                 `Segue protocolo do chamado: ${token(data.protocolo, "Protocolo", strict)}`
             ].join("\n")
@@ -112,47 +115,133 @@
             ].join("\n")
         },
         transferenciaCmoReparo: {
-            label: "Transferencia - CMO REPARO",
+            label: "Transferência - CMO REPARO",
             fields: [
-                { id: "analise", label: "Analise", placeholder: "Resumo tecnico" },
-                { id: "orientacoes", label: "Orientacoes", placeholder: "Passos orientados" },
-                { id: "enderecoCmoReparo", label: "Endereco", placeholder: "Endereco da base" },
-                { id: "horarioFuncionamento", label: "Horario", placeholder: "Ex: 08:00 as 18:00" },
-                { id: "telefoneCmoReparo", label: "Telefone", placeholder: "Ex: (85) 99999-9999" },
-                { id: "emailCmoReparo", label: "E-mail", placeholder: "Ex: suporte@empresa.com" }
+                {
+                    id: "analise",
+                    label: "Análise",
+                    type: "select",
+                    options: [
+                        "Falha massiva identificada",
+                        "Equipamento sem resposta",
+                        "Sinal degradado",
+                        "Instabilidade intermitente",
+                        "Necessária validação em campo"
+                    ]
+                },
+                {
+                    id: "orientacoes",
+                    label: "Orientações",
+                    type: "select",
+                    options: [
+                        "Acionar equipe local para validação",
+                        "Validar energia e aterramento",
+                        "Reiniciar equipamento e coletar logs",
+                        "Confirmar conectividade após tratativa",
+                        "Retornar com evidência fotográfica"
+                    ]
+                },
+                {
+                    id: "horarioFuncionamento",
+                    label: "Horário",
+                    type: "select",
+                    options: [
+                        "08:00 às 18:00",
+                        "09:00 às 18:00",
+                        "Horário comercial",
+                        "24x7"
+                    ]
+                },
+                {
+                    id: "telefoneCmoReparo",
+                    label: "Telefone",
+                    placeholder: "Ex: (85) 99999-9999"
+                },
+                {
+                    id: "emailCmoReparo",
+                    label: "E-mail",
+                    inputType: "email",
+                    placeholder: "Ex: equipe@empresa.com"
+                }
             ],
             build: (data, strict) => [
-                "CARIMBO: TRANSFERENCIA - CMO REPARO",
+                "CARIMBO: TRANSFERÊNCIA - CMO REPARO",
                 `Protocolo: ${token(data.protocolo, "Protocolo", strict)}`,
                 "",
-                `Analise: ${token(data.carimboValues.analise, "Analise", strict)}`,
-                `Orientacoes: ${token(data.carimboValues.orientacoes, "Orientacoes", strict)}`,
-                `Endereco: ${token(data.carimboValues.enderecoCmoReparo, "Endereco", strict)}`,
-                `Horario de funcionamento: ${token(data.carimboValues.horarioFuncionamento, "Horario", strict)}`,
+                `Análise: ${token(data.carimboValues.analise, "Análise", strict)}`,
+                `Orientações: ${token(data.carimboValues.orientacoes, "Orientações", strict)}`,
+                `Horário de funcionamento: ${token(data.carimboValues.horarioFuncionamento, "Horário", strict)}`,
                 `Telefone: ${token(data.carimboValues.telefoneCmoReparo, "Telefone", strict)}`,
                 `E-mail: ${token(data.carimboValues.emailCmoReparo, "E-mail", strict)}`
             ].join("\n")
         },
         transferenciaCaParceiro: {
-            label: "Transferencia - CA - PARCEIRO",
+            label: "Transferência - CA - PARCEIRO",
             fields: [
-                { id: "analiseParceiro", label: "Analise", placeholder: "Resumo tecnico" },
-                { id: "parceiro", label: "Parceiro", placeholder: "Nome do parceiro" },
-                { id: "orientacaoParceiro", label: "Orientacao", placeholder: "Orientacao realizada" },
-                { id: "enderecoParceiro", label: "Endereco", placeholder: "Endereco do parceiro" },
-                { id: "horarioFuncionamentoParceiro", label: "Horario", placeholder: "Ex: 08:00 as 17:00" },
-                { id: "telefoneParceiro", label: "Telefone", placeholder: "Ex: (85) 98888-8888" },
-                { id: "emailParceiro", label: "E-mail", placeholder: "Ex: parceiro@empresa.com" }
+                {
+                    id: "analiseParceiro",
+                    label: "Análise",
+                    type: "select",
+                    options: [
+                        "Chamado direcionado para parceiro",
+                        "Atendimento depende de agenda do parceiro",
+                        "Necessária análise presencial do parceiro",
+                        "Ponto fora do escopo da equipe interna"
+                    ]
+                },
+                {
+                    id: "parceiro",
+                    label: "Parceiro",
+                    type: "select",
+                    options: [
+                        "Parceiro Regional 01",
+                        "Parceiro Regional 02",
+                        "Parceiro Regional 03",
+                        "Parceiro Local"
+                    ]
+                },
+                {
+                    id: "orientacaoParceiro",
+                    label: "Orientação",
+                    type: "select",
+                    options: [
+                        "Direcionar para parceiro responsável",
+                        "Agendar visita técnica com parceiro",
+                        "Confirmar disponibilidade de atendimento",
+                        "Retornar com protocolo do parceiro"
+                    ]
+                },
+                {
+                    id: "horarioFuncionamentoParceiro",
+                    label: "Horário",
+                    type: "select",
+                    options: [
+                        "08:00 às 17:00",
+                        "08:00 às 18:00",
+                        "09:00 às 18:00",
+                        "Horário comercial"
+                    ]
+                },
+                {
+                    id: "telefoneParceiro",
+                    label: "Telefone",
+                    placeholder: "Ex: (85) 98888-8888"
+                },
+                {
+                    id: "emailParceiro",
+                    label: "E-mail",
+                    inputType: "email",
+                    placeholder: "Ex: parceiro@empresa.com"
+                }
             ],
             build: (data, strict) => [
-                "CARIMBO: TRANSFERENCIA - CA - PARCEIRO",
+                "CARIMBO: TRANSFERÊNCIA - CA - PARCEIRO",
                 `Protocolo: ${token(data.protocolo, "Protocolo", strict)}`,
                 "",
-                `Analise: ${token(data.carimboValues.analiseParceiro, "Analise", strict)}`,
+                `Análise: ${token(data.carimboValues.analiseParceiro, "Análise", strict)}`,
                 `Parceiro: ${token(data.carimboValues.parceiro, "Parceiro", strict)}`,
-                `Orientacao: ${token(data.carimboValues.orientacaoParceiro, "Orientacao", strict)}`,
-                `Endereco: ${token(data.carimboValues.enderecoParceiro, "Endereco", strict)}`,
-                `Horario de funcionamento: ${token(data.carimboValues.horarioFuncionamentoParceiro, "Horario", strict)}`,
+                `Orientação: ${token(data.carimboValues.orientacaoParceiro, "Orientação", strict)}`,
+                `Horário de funcionamento: ${token(data.carimboValues.horarioFuncionamentoParceiro, "Horário", strict)}`,
                 `Telefone: ${token(data.carimboValues.telefoneParceiro, "Telefone", strict)}`,
                 `E-mail: ${token(data.carimboValues.emailParceiro, "E-mail", strict)}`
             ].join("\n")
@@ -167,13 +256,19 @@
             textos: [],
             carimbos: []
         },
+        sidebarCollapsed: false,
         theme: "light",
+        layoutModel: "sophisticated",
+        workspaceLayout: "balanced",
         commandItems: [],
         commandIndex: -1
     };
 
     const elements = {
+        app: document.querySelector(".app"),
         html: document.documentElement,
+        railNav: document.querySelector(".rail"),
+        railNavItems: Array.from(document.querySelectorAll(".rail-btn[data-nav]")),
         formCard: document.querySelector(".form-card"),
         sidebarNav: document.querySelector(".sidebar-nav"),
         navItems: Array.from(document.querySelectorAll(".nav-item")),
@@ -204,14 +299,21 @@
         configPanel: document.getElementById("configPanel"),
         darkModeCheckbox: document.getElementById("darkModeCheckbox"),
         themeToggle: document.getElementById("themeToggle"),
+        sidebarToggle: document.getElementById("sidebarToggle"),
         clearStorage: document.getElementById("clearStorage"),
+        layoutModelSelect: document.getElementById("layoutModelSelect"),
+        workspaceLayoutSelect: document.getElementById("workspaceLayoutSelect"),
         quickSearch: document.getElementById("quickSearch"),
         commandResults: document.getElementById("commandResults"),
         recentProtocols: document.getElementById("recentProtocols"),
+        saveStatus: document.getElementById("saveStatus"),
+        requiredStatus: document.getElementById("requiredStatus"),
+        currentTemplate: document.getElementById("currentTemplate"),
         toast: document.getElementById("toast")
     };
 
     let toastTimer = null;
+    let saveTimer = null;
 
     init();
 
@@ -229,7 +331,11 @@
         renderRecentProtocols();
         syncFavoriteButton();
         updatePreview();
+        updateFormContext();
         applyTheme(state.theme, { persist: false });
+        applyLayoutModel(state.layoutModel, { persist: false });
+        applyWorkspaceLayout(state.workspaceLayout, { persist: false });
+        applySidebarState(state.sidebarCollapsed, { persist: false });
         persistFormState();
 
         requestAnimationFrame(() => {
@@ -246,14 +352,27 @@
             setSidebar("carimbos");
         });
 
-        elements.sidebarNav.addEventListener("click", (event) => {
-            const button = event.target.closest(".nav-item");
-            if (!button) {
-                return;
-            }
+        if (elements.sidebarNav) {
+            elements.sidebarNav.addEventListener("click", (event) => {
+                const button = event.target.closest(".nav-item");
+                if (!button) {
+                    return;
+                }
 
-            setSidebar(button.dataset.nav);
-        });
+                setSidebar(button.dataset.nav);
+            });
+        }
+
+        if (elements.railNav) {
+            elements.railNav.addEventListener("click", (event) => {
+                const button = event.target.closest(".rail-btn[data-nav]");
+                if (!button) {
+                    return;
+                }
+
+                setSidebar(button.dataset.nav);
+            });
+        }
 
         elements.formCard.addEventListener("input", (event) => {
             handleFormChange(event.target);
@@ -277,15 +396,45 @@
             applyTheme(next);
         });
 
+        if (elements.sidebarToggle) {
+            elements.sidebarToggle.addEventListener("click", () => {
+                applySidebarState(!state.sidebarCollapsed);
+            });
+        }
+
         elements.darkModeCheckbox.addEventListener("change", () => {
             applyTheme(elements.darkModeCheckbox.checked ? "dark" : "light");
         });
+
+        if (elements.layoutModelSelect) {
+            elements.layoutModelSelect.addEventListener("change", () => {
+                applyLayoutModel(elements.layoutModelSelect.value);
+                if (state.layoutModel === "compact") {
+                    showToast("Modelo compacto ativado.");
+                    return;
+                }
+
+                if (state.layoutModel === "focus") {
+                    showToast("Modelo focus ativado.");
+                    return;
+                }
+
+                showToast("Modelo sofisticado ativado.");
+            });
+        }
+
+        if (elements.workspaceLayoutSelect) {
+            elements.workspaceLayoutSelect.addEventListener("change", () => {
+                applyWorkspaceLayout(elements.workspaceLayoutSelect.value);
+                showToast("Layout de trabalho atualizado.");
+            });
+        }
 
         elements.clearStorage.addEventListener("click", handleClearLocalData);
 
         elements.textoGerado.addEventListener("input", () => {
             updateCharacterCounter();
-            persistFormState();
+            schedulePersistFormState();
         });
 
         elements.quickSearch.addEventListener("input", handleQuickSearchInput);
@@ -302,6 +451,10 @@
     }
 
     function handleFormChange(target) {
+        if (target.id === "protocolo") {
+            target.value = formatProtocol(target.value);
+        }
+
         if (target.id === "texto") {
             toggleCancelamentoField({ focus: true });
             syncFavoriteButton();
@@ -312,8 +465,18 @@
             syncFavoriteButton();
         }
 
+        if (target && target.classList) {
+            target.classList.remove("field-invalid");
+        }
+
         updatePreview();
-        persistFormState();
+        updateFormContext();
+        schedulePersistFormState();
+
+        if (!validate(collectValues()).length) {
+            hideValidation();
+            clearFieldValidationStyles();
+        }
     }
 
     function setSidebar(nav) {
@@ -350,6 +513,10 @@
 
     function updateSidebarVisual() {
         elements.navItems.forEach((item) => {
+            item.classList.toggle("is-active", item.dataset.nav === state.nav);
+        });
+
+        elements.railNavItems.forEach((item) => {
             item.classList.toggle("is-active", item.dataset.nav === state.nav);
         });
     }
@@ -393,7 +560,7 @@
 
         elements.textoSection.classList.toggle("is-hidden", !isTexto);
         elements.carimboSection.classList.toggle("is-hidden", isTexto);
-        elements.mensagemTipo.textContent = `Modo: ${isTexto ? "Textos" : "Carimbos"}`;
+        elements.mensagemTipo.innerHTML = `<i class="ti ti-layout-list" aria-hidden="true"></i>Modo: ${isTexto ? "Textos" : "Carimbos"}`;
 
         if (!keepNav) {
             state.nav = isTexto ? "textos" : "carimbos";
@@ -409,7 +576,8 @@
         syncFavoriteButton();
         hideValidation();
         updatePreview();
-        persistFormState();
+        updateFormContext();
+        schedulePersistFormState();
 
         if (focus) {
             if (isTexto) {
@@ -443,14 +611,34 @@
                 label.setAttribute("for", field.id);
                 label.textContent = `${field.label} *`;
 
-                const input = document.createElement("input");
-                input.id = field.id;
-                input.type = "text";
-                input.placeholder = field.placeholder;
-                input.autocomplete = "off";
-
                 wrapper.appendChild(label);
-                wrapper.appendChild(input);
+
+                if (field.type === "select") {
+                    const select = document.createElement("select");
+                    select.id = field.id;
+
+                    const firstOption = document.createElement("option");
+                    firstOption.value = "";
+                    firstOption.textContent = field.selectPlaceholder || "--Selecione--";
+                    select.appendChild(firstOption);
+
+                    (field.options || []).forEach((optionValue) => {
+                        const option = document.createElement("option");
+                        option.value = optionValue;
+                        option.textContent = optionValue;
+                        select.appendChild(option);
+                    });
+
+                    wrapper.appendChild(select);
+                } else {
+                    const input = document.createElement("input");
+                    input.id = field.id;
+                    input.type = field.inputType || "text";
+                    input.placeholder = field.placeholder;
+                    input.autocomplete = "off";
+                    wrapper.appendChild(input);
+                }
+
                 grid.appendChild(wrapper);
             });
 
@@ -484,7 +672,7 @@
 
         if (focus && selected) {
             const activeGroup = elements.carimboFieldsContainer.querySelector(`.carimbo-group[data-carimbo-id="${selected}"]`);
-            const firstInput = activeGroup ? activeGroup.querySelector("input") : null;
+            const firstInput = activeGroup ? activeGroup.querySelector("input, select") : null;
             if (firstInput) {
                 firstInput.focus();
             }
@@ -514,38 +702,7 @@
     }
 
     function validate(values) {
-        const errors = [];
-
-        if (!values.protocolo) {
-            errors.push("Informe o numero do protocolo.");
-        }
-
-        if (values.mode === "texto") {
-            if (!values.textoId) {
-                errors.push("Selecione um template de texto.");
-            }
-
-            if (values.textoId === "cancelamentoChamado" && !values.numeroChamado) {
-                errors.push("Informe o numero do chamado cancelado.");
-            }
-        }
-
-        if (values.mode === "carimbo") {
-            if (!values.carimboId) {
-                errors.push("Selecione um tipo de carimbo.");
-            }
-
-            const selected = STAMP_TEMPLATES[values.carimboId];
-            if (selected) {
-                selected.fields.forEach((field) => {
-                    if (!values.carimboValues[field.id]) {
-                        errors.push(`Preencha o campo ${field.label}.`);
-                    }
-                });
-            }
-        }
-
-        return errors;
+        return collectValidationIssues(values).map((issue) => issue.message);
     }
 
     function showValidation(errors) {
@@ -568,7 +725,7 @@
     function buildMessage(values, strict) {
         if (values.mode === "texto") {
             if (!values.textoId) {
-                return strict ? "" : "Selecione um template de texto para iniciar a pre-visualizacao.";
+                return strict ? "" : "Selecione um template de texto para iniciar a pré-visualização.";
             }
 
             const template = TEXT_TEMPLATES[values.textoId];
@@ -580,7 +737,7 @@
         }
 
         if (!values.carimboId) {
-            return strict ? "" : "Selecione um carimbo para iniciar a pre-visualizacao.";
+            return strict ? "" : "Selecione um carimbo para iniciar a pré-visualização.";
         }
 
         const carimboTemplate = STAMP_TEMPLATES[values.carimboId];
@@ -604,19 +761,30 @@
 
     function handleGenerate() {
         const values = collectValues();
-        const errors = validate(values);
+        const issues = collectValidationIssues(values);
+        const errors = issues.map((issue) => issue.message);
+        applyValidationStyles(issues);
 
         if (errors.length > 0) {
             showValidation(errors);
-            showToast("Preencha os campos obrigatorios para gerar o texto.");
+            showToast("Preencha os campos obrigatórios para gerar o texto.");
+            updateFormContext(issues);
+
+            const firstIssue = issues.find((issue) => issue.fieldId);
+            const firstField = firstIssue ? document.getElementById(firstIssue.fieldId) : null;
+            if (firstField) {
+                firstField.focus();
+            }
+
             return;
         }
 
         hideValidation();
+        clearFieldValidationStyles();
 
         const message = buildMessage(values, true);
         if (!message) {
-            showToast("Nao foi possivel gerar o texto.");
+            showToast("Não foi possível gerar o texto.");
             return;
         }
 
@@ -625,6 +793,7 @@
 
         addHistory(values, message);
         persistFormState();
+        updateFormContext();
         showToast("Texto gerado com sucesso.");
     }
 
@@ -632,16 +801,19 @@
         const text = elements.textoGerado.value.trim();
 
         if (!text) {
-            showToast("Nao ha conteudo para copiar.");
+            showToast("Não há conteúdo para copiar.");
             return;
         }
 
         const values = collectValues();
-        const errors = validate(values);
+        const issues = collectValidationIssues(values);
+        const errors = issues.map((issue) => issue.message);
 
         if (errors.length && text.includes("[")) {
+            applyValidationStyles(issues);
             showValidation(errors);
             showToast("Finalize os campos pendentes antes de copiar.");
+            updateFormContext(issues);
             return;
         }
 
@@ -685,12 +857,14 @@
         toggleCancelamentoField();
         toggleCarimboFieldGroups({ focus: false });
         hideValidation();
+        clearFieldValidationStyles();
         updateCharacterCounter();
         updatePreview();
+        updateFormContext();
         persistFormState();
 
         elements.protocolo.focus();
-        showToast("Formulario limpo.");
+        showToast("Formulário limpo.");
     }
 
     function addHistory(values, text) {
@@ -766,7 +940,7 @@
         }
 
         loadHistoryEntry(entry);
-        showToast("Historico aplicado no formulario.");
+        showToast("Histórico aplicado no formulário.");
     }
 
     function loadHistoryEntry(entry) {
@@ -789,20 +963,21 @@
             });
         }
 
-        elements.protocolo.value = entry.protocolo || "";
+        elements.protocolo.value = formatProtocol(entry.protocolo || "");
         elements.textoGerado.value = entry.text || "";
         updateCharacterCounter();
         syncFavoriteButton();
+        updateFormContext();
         persistFormState();
     }
 
     function handleClearHistory() {
         if (state.history.length === 0) {
-            showToast("Historico ja esta vazio.");
+            showToast("Histórico já está vazio.");
             return;
         }
 
-        const confirmed = window.confirm("Deseja limpar todo o historico de protocolos?");
+        const confirmed = window.confirm("Deseja limpar todo o histórico de protocolos?");
         if (!confirmed) {
             return;
         }
@@ -811,7 +986,7 @@
         persistHistory();
         renderHistory();
         renderRecentProtocols();
-        showToast("Historico limpo.");
+        showToast("Histórico limpo.");
     }
 
     function renderRecentProtocols() {
@@ -850,8 +1025,9 @@
             return;
         }
 
-        elements.protocolo.value = chip.dataset.protocolo;
+        elements.protocolo.value = formatProtocol(chip.dataset.protocolo);
         updatePreview();
+        updateFormContext();
         persistFormState();
         elements.protocolo.focus();
     }
@@ -891,15 +1067,11 @@
     function syncFavoriteButton() {
         const current = getCurrentTemplateSelection();
         const bucket = current.mode === "texto" ? state.favorites.textos : state.favorites.carimbos;
+        const isFavorite = Boolean(current.id) && bucket.includes(current.id);
+        const label = isFavorite ? "Remover favorito" : "Salvar favorito";
 
-        if (!current.id) {
-            elements.toggleFavorite.textContent = "Salvar favorito";
-            return;
-        }
-
-        elements.toggleFavorite.textContent = bucket.includes(current.id)
-            ? "Remover favorito"
-            : "Salvar favorito";
+        elements.toggleFavorite.innerHTML = `<i class="ti ${isFavorite ? "ti-star-filled" : "ti-star"}" aria-hidden="true"></i>${label}`;
+        elements.toggleFavorite.setAttribute("aria-label", label);
     }
 
     function renderFavorites() {
@@ -963,11 +1135,12 @@
 
         updatePreview();
         syncFavoriteButton();
+        updateFormContext();
         persistFormState();
     }
 
     function handleQuickSearchInput() {
-        const query = elements.quickSearch.value.trim().toLowerCase();
+        const query = normalizeForSearch(elements.quickSearch.value.trim());
 
         if (!query) {
             closeCommandResults();
@@ -977,19 +1150,19 @@
         const results = [];
 
         Object.entries(TEXT_TEMPLATES).forEach(([id, template]) => {
-            if (template.label.toLowerCase().includes(query)) {
+            if (normalizeForSearch(template.label).includes(query)) {
                 results.push({ type: "texto", id, label: template.label, meta: "Template de texto" });
             }
         });
 
         Object.entries(STAMP_TEMPLATES).forEach(([id, template]) => {
-            if (template.label.toLowerCase().includes(query)) {
+            if (normalizeForSearch(template.label).includes(query)) {
                 results.push({ type: "carimbo", id, label: template.label, meta: "Template de carimbo" });
             }
         });
 
         state.history.forEach((entry) => {
-            if (entry.protocolo && entry.protocolo.toLowerCase().includes(query)) {
+            if (entry.protocolo && normalizeForSearch(entry.protocolo).includes(query)) {
                 results.push({ type: "protocolo", id: entry.protocolo, label: entry.protocolo, meta: "Protocolo recente" });
             }
         });
@@ -1106,18 +1279,33 @@
         }
 
         if (item.type === "protocolo") {
-            elements.protocolo.value = item.id;
+            elements.protocolo.value = formatProtocol(item.id);
             elements.protocolo.focus();
         }
 
         updatePreview();
         syncFavoriteButton();
+        updateFormContext();
         persistFormState();
         elements.quickSearch.value = "";
         closeCommandResults();
     }
 
     function handleShortcuts(event) {
+        if (!event.ctrlKey && !event.metaKey && !event.altKey && event.key === "Enter") {
+            const target = event.target;
+
+            if (target === elements.quickSearch) {
+                return;
+            }
+
+            if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement) {
+                event.preventDefault();
+                handleGenerate();
+                return;
+            }
+        }
+
         const key = event.key.toLowerCase();
 
         if ((event.ctrlKey || event.metaKey) && key === "k") {
@@ -1159,7 +1347,10 @@
         elements.html.setAttribute("data-theme", state.theme);
 
         const isDark = state.theme === "dark";
-        elements.themeToggle.textContent = isDark ? "Modo claro" : "Modo escuro";
+        elements.themeToggle.innerHTML = `<i class="ti ${isDark ? "ti-sun" : "ti-moon"}" aria-hidden="true"></i>`;
+        elements.themeToggle.classList.toggle("is-active", isDark);
+        elements.themeToggle.title = isDark ? "Alternar para modo claro" : "Alternar para modo escuro";
+        elements.themeToggle.setAttribute("aria-label", elements.themeToggle.title);
         elements.themeToggle.setAttribute("aria-pressed", String(isDark));
         elements.darkModeCheckbox.checked = isDark;
 
@@ -1168,8 +1359,40 @@
         }
     }
 
+    function applyLayoutModel(model, options = {}) {
+        const { persist = true } = options;
+        const allowed = new Set(["sophisticated", "compact", "focus"]);
+        state.layoutModel = allowed.has(model) ? model : "sophisticated";
+
+        elements.html.setAttribute("data-layout", state.layoutModel);
+
+        if (elements.layoutModelSelect) {
+            elements.layoutModelSelect.value = state.layoutModel;
+        }
+
+        if (persist) {
+            localStorage.setItem(STORAGE_KEYS.layout, state.layoutModel);
+        }
+    }
+
+    function applyWorkspaceLayout(layout, options = {}) {
+        const { persist = true } = options;
+        const allowed = new Set(["balanced", "formFirst", "previewFirst", "stacked"]);
+        state.workspaceLayout = allowed.has(layout) ? layout : "balanced";
+
+        elements.html.setAttribute("data-workspace", state.workspaceLayout);
+
+        if (elements.workspaceLayoutSelect) {
+            elements.workspaceLayoutSelect.value = state.workspaceLayout;
+        }
+
+        if (persist) {
+            localStorage.setItem(STORAGE_KEYS.workspace, state.workspaceLayout);
+        }
+    }
+
     function handleClearLocalData() {
-        const confirmed = window.confirm("Limpar historico, favoritos e ultimo formulario salvo?");
+        const confirmed = window.confirm("Limpar histórico, favoritos e último formulário salvo?");
         if (!confirmed) {
             return;
         }
@@ -1178,10 +1401,19 @@
         localStorage.removeItem(STORAGE_KEYS.favorites);
         localStorage.removeItem(STORAGE_KEYS.form);
         localStorage.removeItem(STORAGE_KEYS.theme);
+        localStorage.removeItem(STORAGE_KEYS.sidebar);
+        localStorage.removeItem(STORAGE_KEYS.layout);
+        localStorage.removeItem(STORAGE_KEYS.workspace);
 
         state.history = [];
         state.favorites = { textos: [], carimbos: [] };
+        state.sidebarCollapsed = false;
+        state.layoutModel = "sophisticated";
+        state.workspaceLayout = "balanced";
         applyTheme("light", { persist: false });
+        applyLayoutModel("sophisticated", { persist: false });
+        applyWorkspaceLayout("balanced", { persist: false });
+        applySidebarState(false, { persist: false });
 
         renderHistory();
         renderFavorites();
@@ -1203,13 +1435,34 @@
             textoGerado: elements.textoGerado.value
         };
 
-        writeJson(STORAGE_KEYS.form, payload);
+        const saved = writeJson(STORAGE_KEYS.form, payload);
+        if (saved) {
+            setSaveStatus("saved");
+        } else {
+            setSaveStatus("error");
+        }
     }
 
     function loadPersistedState() {
         const persistedTheme = localStorage.getItem(STORAGE_KEYS.theme);
         if (persistedTheme === "dark" || persistedTheme === "light") {
             state.theme = persistedTheme;
+        }
+
+        const persistedSidebar = localStorage.getItem(STORAGE_KEYS.sidebar);
+        state.sidebarCollapsed = persistedSidebar === "1";
+
+        const persistedLayout = localStorage.getItem(STORAGE_KEYS.layout);
+        if (persistedLayout === "compact" || persistedLayout === "sophisticated" || persistedLayout === "focus") {
+            state.layoutModel = persistedLayout;
+        }
+
+        const persistedWorkspace = localStorage.getItem(STORAGE_KEYS.workspace);
+        if (persistedWorkspace === "balanced"
+            || persistedWorkspace === "formFirst"
+            || persistedWorkspace === "previewFirst"
+            || persistedWorkspace === "stacked") {
+            state.workspaceLayout = persistedWorkspace;
         }
 
         const savedHistory = readJson(STORAGE_KEYS.history, []);
@@ -1228,7 +1481,7 @@
 
         state.mode = savedForm.mode === "carimbo" ? "carimbo" : "texto";
 
-        elements.protocolo.value = savedForm.protocolo || "";
+        elements.protocolo.value = formatProtocol(savedForm.protocolo || "");
         elements.texto.value = savedForm.textoId || "";
         elements.numeroChamado.value = savedForm.numeroChamado || "";
         elements.selectCarimbo.value = savedForm.carimboId || "";
@@ -1246,6 +1499,7 @@
         }
 
         updateCharacterCounter();
+        setSaveStatus("saved");
     }
 
     function persistHistory() {
@@ -1259,8 +1513,10 @@
     function writeJson(key, value) {
         try {
             localStorage.setItem(key, JSON.stringify(value));
+            return true;
         } catch (error) {
             console.error("Falha ao salvar dados locais", error);
+            return false;
         }
     }
 
@@ -1307,7 +1563,7 @@
     function formatDate(isoDate) {
         const date = new Date(isoDate);
         if (Number.isNaN(date.getTime())) {
-            return "Data invalida";
+            return "Data inválida";
         }
 
         return new Intl.DateTimeFormat("pt-BR", {
@@ -1320,7 +1576,186 @@
     }
 
     function updateCharacterCounter() {
-        elements.contadorCaracteres.textContent = `${elements.textoGerado.value.length} caracteres`;
+        elements.contadorCaracteres.innerHTML = `<i class="ti ti-cursor-text" aria-hidden="true"></i>${elements.textoGerado.value.length} caracteres`;
+    }
+
+    function collectValidationIssues(values) {
+        const issues = [];
+
+        if (!values.protocolo) {
+            issues.push({
+                fieldId: "protocolo",
+                label: "Protocolo",
+                message: "Informe o número do protocolo."
+            });
+        }
+
+        if (values.mode === "texto") {
+            if (!values.textoId) {
+                issues.push({
+                    fieldId: "texto",
+                    label: "Template de texto",
+                    message: "Selecione um template de texto."
+                });
+            }
+
+            if (values.textoId === "cancelamentoChamado" && !values.numeroChamado) {
+                issues.push({
+                    fieldId: "numeroChamado",
+                    label: "Número do chamado cancelado",
+                    message: "Informe o número do chamado cancelado."
+                });
+            }
+        }
+
+        if (values.mode === "carimbo") {
+            if (!values.carimboId) {
+                issues.push({
+                    fieldId: "selectCarimbo",
+                    label: "Tipo de carimbo",
+                    message: "Selecione um tipo de carimbo."
+                });
+            }
+
+            const selected = STAMP_TEMPLATES[values.carimboId];
+            if (selected) {
+                selected.fields.forEach((field) => {
+                    if (!values.carimboValues[field.id]) {
+                        issues.push({
+                            fieldId: field.id,
+                            label: field.label,
+                            message: `Preencha o campo ${field.label}.`
+                        });
+                    }
+                });
+            }
+        }
+
+        return issues;
+    }
+
+    function formatProtocol(value) {
+        const digits = (value || "").replace(/\D/g, "").slice(0, 13);
+        const main = digits.slice(0, 8);
+        const sequence = digits.slice(8, 13);
+
+        if (!sequence) {
+            return main;
+        }
+
+        return `${main}-${sequence}`;
+    }
+
+    function normalizeForSearch(value) {
+        return (value || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+    }
+
+    function clearFieldValidationStyles() {
+        const fields = elements.formCard.querySelectorAll("input, select");
+        fields.forEach((field) => {
+            field.classList.remove("field-invalid");
+        });
+    }
+
+    function applyValidationStyles(issues) {
+        clearFieldValidationStyles();
+
+        issues.forEach((issue) => {
+            if (!issue.fieldId) {
+                return;
+            }
+
+            const field = document.getElementById(issue.fieldId);
+            if (field) {
+                field.classList.add("field-invalid");
+            }
+        });
+    }
+
+    function updateFormContext(issuesParam) {
+        const values = collectValues();
+        const issues = Array.isArray(issuesParam) ? issuesParam : collectValidationIssues(values);
+        const pending = issues.length;
+
+        if (pending === 0) {
+            elements.requiredStatus.textContent = "Tudo pronto para gerar";
+        } else if (pending === 1) {
+            elements.requiredStatus.textContent = "1 campo obrigatório pendente";
+        } else {
+            elements.requiredStatus.textContent = `${pending} campos obrigatórios pendentes`;
+        }
+
+        if (values.mode === "texto") {
+            elements.currentTemplate.textContent = values.textoId
+                ? `Texto: ${resolveTextoLabel(values.textoId)}`
+                : "Texto: não selecionado";
+        } else {
+            elements.currentTemplate.textContent = values.carimboId
+                ? `Carimbo: ${resolveCarimboLabel(values.carimboId)}`
+                : "Carimbo: não selecionado";
+        }
+    }
+
+    function schedulePersistFormState() {
+        setSaveStatus("pending");
+
+        if (saveTimer) {
+            clearTimeout(saveTimer);
+        }
+
+        saveTimer = setTimeout(() => {
+            persistFormState();
+            saveTimer = null;
+        }, 240);
+    }
+
+    function setSaveStatus(status) {
+        if (!elements.saveStatus) {
+            return;
+        }
+
+        elements.saveStatus.classList.remove("is-pending", "is-saved", "is-error");
+
+        if (status === "pending") {
+            elements.saveStatus.classList.add("is-pending");
+            elements.saveStatus.textContent = "Alterações pendentes";
+            return;
+        }
+
+        if (status === "error") {
+            elements.saveStatus.classList.add("is-error");
+            elements.saveStatus.textContent = "Falha ao salvar";
+            return;
+        }
+
+        const time = new Intl.DateTimeFormat("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit"
+        }).format(new Date());
+
+        elements.saveStatus.classList.add("is-saved");
+        elements.saveStatus.textContent = `Salvo às ${time}`;
+    }
+
+    function applySidebarState(collapsed, options = {}) {
+        const { persist = true } = options;
+        state.sidebarCollapsed = Boolean(collapsed);
+
+        if (elements.app) {
+            elements.app.classList.toggle("is-sidebar-collapsed", state.sidebarCollapsed);
+        }
+
+        if (elements.sidebarToggle) {
+            elements.sidebarToggle.setAttribute("aria-pressed", String(state.sidebarCollapsed));
+            elements.sidebarToggle.textContent = state.sidebarCollapsed ? "Mostrar menu" : "Ocultar menu";
+        }
+
+        if (persist) {
+            localStorage.setItem(STORAGE_KEYS.sidebar, state.sidebarCollapsed ? "1" : "0");
+        }
     }
 
     function showToast(message) {
